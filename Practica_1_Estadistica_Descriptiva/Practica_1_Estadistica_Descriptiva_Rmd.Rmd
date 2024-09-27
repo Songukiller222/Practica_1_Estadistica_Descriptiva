@@ -8,23 +8,18 @@ date: "2024-09-27"
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r}
+FastFoodNutritionMenuV2 <- read.csv('FastFoodNutritionMenuV2.csv')
 ```
 
-## Including Plots
+#Introducción y definición de objetivos
+El documento FastFoodNutritionMenuV2.csv contiene una lista de los resultados de distintos valores nutricionales obtenidos en distintos productos de diferentes marcas de comida rápida.
+El objetivo de este estudio es determinar cuál de todos los productos analizados es el más dañino para la salud de las personas.
 
-You can also embed plots, for example:
+#Importación de datos y carga de paquetes
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
+En primer lugar, se precisa de la instalación de diversas librerías de "R" para llevar a cabo nuestro análisis descriptivo.
+```{r}
 
 library(tidyverse)
 library(summarytools)
@@ -34,11 +29,39 @@ library(flextable)
 library(knitr)
 library(corrplot)
 library(dplyr)
+```
+Se proseguirá con la descarga y lectura del fichero que se va a estudiar en este proyecto.  
 
+#Diccionario de datos
+
+*`Company`: Compañía
+*`Item`: Nombre del producto
+*`Calories`: calorias del producto (kcal)
+*`Fat`: Grasas del producto (g)
+*`Cholesterol`: Colesterol total del producto (g)
+*`Sodium`: Sodio del producto (g)
+*`Carbs`: Carbohidratos totales del producto (g)
+*`Fiber`: Fibra total del producto (g)
+*`Sugars`: Azúcares totales del producto (g)
+*`Protein`: Proteina total del producto (g)
+
+
+#Muestra del dataset
+Ahora, se va a mostrar los primeros 10 elementos de la lista total de datos.
+
+
+
+```{r}
 FastFoodNutritionMenuV2|>
 slice_head(n=10)|>
 gt()
+```
 
-*`calories`: calorias 
-*`codigo`: Un identificador de la pieza
 
+
+
+#Análisis exploratorio de datos
+Se procederá a visionar el análisis exploratorio de datos (EDA) para obtener una conclusión sobre la muestra de datos obtenida.
+
+##Datos univariantes
+Se va a empezar analizando los datos univariantes que nos permitirá comprender la distribución y frecuencia de cada variable.
