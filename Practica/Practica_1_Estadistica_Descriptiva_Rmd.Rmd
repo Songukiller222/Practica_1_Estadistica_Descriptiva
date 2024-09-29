@@ -1,0 +1,133 @@
+---
+title: "Práctica de nutrición"
+author: "Alejandro Hernández, Carlos Martínez, Daniel Corbacho, Iván Palacios, Pablo Romero, Paula Ortiz "
+output: html_document
+date: "Estadística 2024-09-27"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+FastFoodNutritionMenuV2 <- read.csv('FastFoodNutritionMenuV2.csv')
+```
+
+#Introducción y definición de objetivos
+El documento FastFoodNutritionMenuV2.csv contiene una lista de los resultados de distintos valores nutricionales obtenidos en distintos productos de diferentes marcas de comida rápida.
+El objetivo de este estudio es determinar cuál de todos los productos analizados es el más dañino para la salud de las personas.
+
+#Importación de datos y carga de paquetes
+
+En primer lugar, se precisa de la instalación de diversas librerías de "R" para llevar a cabo nuestro análisis descriptivo.
+```{r}
+
+library(tidyverse)
+library(summarytools)
+library(GGally)
+library(gt)
+library(flextable)
+library(knitr)
+library(corrplot)
+library(dplyr)
+```
+Se proseguirá con la descarga y lectura del fichero que se va a estudiar en este proyecto.  
+
+#Diccionario de datos
+
+*`Company`: Compañía distribuidora del producto
+*`Item`: Nombre del producto
+*`Calories`: calorías totales del producto (kcal)
+*`Fat`: Grasas totales del producto (g)
+*`Cholesterol`: Colesterol total del producto (g)
+*`Sodium`: Sodio total del producto (g)
+*`Carbs`: Carbohidratos totales del producto (g)
+*`Fiber`: Fibra total del producto (g)
+*`Sugars`: Azúcares totales del producto (g)
+*`Protein`: Proteina total del producto (g)
+
+
+#Muestra del dataset
+Ahora, se va a mostrar los primeros 10 elementos de la lista total de datos.
+
+
+
+```{r}
+FastFoodNutritionMenuV2|>
+slice_head(n=10)|>
+gt()
+```
+
+
+
+
+#Análisis exploratorio de datos
+Se procederá a visionar el análisis exploratorio de datos (EDA) para obtener una conclusión sobre la muestra de datos obtenida.
+
+##Datos univariantes
+Se va a empezar analizando los datos univariantes que nos permitirá comprender la distribución y frecuencia de cada variable.
+
+### Tablas de frecuencias
+Se va a mostrar las tablas de frecuencia para entender mejor la distribución de nuestras variables.
+
+
+Se comenzará con la variabla"Company", para observar cómo se distribuyen las compañías de la muestra de datos.
+Tabla para la variable "Company":
+
+```{r}
+tabla_frecuencia <-FastFoodNutritionMenuV2 |>
+  count(Company)|> 
+  mutate(f = n/nrow(FastFoodNutritionMenuV2),
+         N = cumsum(n),
+         F = cumsum(f))
+knitr::kable(tabla_frecuencia, digits = 4)
+```
+Para una mejor representación, se realiza un gráfico de barras con las frecuencias relativas. Así, se podrá apreciar de una forma más sencilla.
+```{r}
+FastFoodNutritionMenuV2  |> group_by(Company) |>  summarise(Frequency = n()) |> mutate(Frequency = Frequency/sum(Frequency), Company = reorder(Company, -Frequency)) |> ggplot(aes(x = Company, y = Frequency)) + geom_bar(stat = "identity", aes(fill = Frequency)) + scale_y_continuous(labels = scales::percent) + theme_bw() + labs(title = "Gráfico de barras con frecuencia relativa de las compañías", x = "Nombre de la compañía", y = "Frecuencia relativa") + scale_fill_gradient("Frecuencia", low = "green", high = "cyan") + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+A continuación se realiza otro gráfico con las frecuencias absolutas.
+```{r}
+FastFoodNutritionMenuV2 |>
+  group_by(Company) |>
+  summarise(Frequency = n()) |>
+  mutate(Company = reorder(Company, -Frequency)) |>
+  ggplot(aes(x = Company, y = Frequency)) +
+  geom_bar(stat = "identity", aes(fill = Frequency)) +
+  theme_bw() +
+  labs(title = "Gráfico de barras con frecuencia absoluta de la compañía",
+       x = "Nombre de la compañía", y = "Frecuencia relativa") + scale_fill_gradient("Frecuencia", low = "green", high = "cyan") + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+
+Ahora se procede a estudiar que compañia es la más perjudicial a partir del estudio de sus diferentes valores.
+
+
+
+```{r}
+FastFoodNutritionMenuV2$Calories <- suppressWarnings(as.numeric(as.character(FastFoodNutritionMenuV2$Calories)))
+
+MediaCalories <- sapply(split(x=FastFoodNutritionMenuV2$Calories, f=FastFoodNutritionMenuV2$Company), mean, na.rm = TRUE)
+
+barplot(MediaCalories, main = "Grafico de madias de calorias de las compañias", xlab = "Compañias", ylab = "Calorias", col = "cyan")
+
+```
+```{r}
+FastFoodNutritionMenuV2 |> 
+  ggplot(aes(x = Calories, fill = Company)) + geom_density(alpha = 0.5)
+```
+
+
+
+```{r}
+FastFoodNutritionMenuV2$Total.Fat..g. <- suppressWarnings(as.numeric(as.character(FastFoodNutritionMenuV2$Total.Fat..g.)))
+
+MediaFat <- sapply(split(x=FastFoodNutritionMenuV2$Total.Fat..g., f=FastFoodNutritionMenuV2$Company), mean, na.rm = TRUE)
+
+barplot(MediaFat, main = "Grafico de madias de grasas de las compañias", xlab = "Compañias", ylab = "Grasas", col = "green")
+```
+```{r}
+FastFoodNutritionMenuV2 |> 
+  ggplot(aes(x = Total.Fat..g., fill = Company)) + geom_density(alpha = 0.5)
+```
+
