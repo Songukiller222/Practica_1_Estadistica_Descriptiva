@@ -15,7 +15,7 @@ FastFoodNutritionMenuV2 <- read.csv('FastFoodNutritionMenuV2.csv')
 
 #Introducción y definición de objetivos
 El documento FastFoodNutritionMenuV2.csv contiene una lista de los resultados de distintos valores nutricionales obtenidos en distintos productos de diferentes marcas de comida rápida.
-El objetivo de este estudio es determinar cuál de todos los productos analizados es el más dañino para la salud de las personas.
+El objetivo de este estudio es determinar cuál de todos los productos analizados es el más dañino para la salud de las personas, así como la compañía con los peores productos.
 
 #Importación de datos y carga de paquetes
 
@@ -102,32 +102,59 @@ FastFoodNutritionMenuV2 |>
 
 Ahora se procede a estudiar que compañia es la más perjudicial a partir del estudio de sus diferentes valores.
 
-
+Se comienzará haciendo la media de las calorías de los productos de cada compañía. Resultando el siguiente gráfico de barras:
 
 ```{r}
 FastFoodNutritionMenuV2$Calories <- suppressWarnings(as.numeric(as.character(FastFoodNutritionMenuV2$Calories)))
 
 MediaCalories <- sapply(split(x=FastFoodNutritionMenuV2$Calories, f=FastFoodNutritionMenuV2$Company), mean, na.rm = TRUE)
 
-barplot(MediaCalories, main = "Grafico de madias de calorias de las compañias", xlab = "Compañias", ylab = "Calorias", col = "cyan")
+barplot(MediaCalories, main = "Gráfico de medias de calorías de los productos", xlab = "Compañías", ylab = "Calorías (kcal)", col = "cyan")
 
 ```
+
+Como se puede observar, la compañía más calórica es Burguer King, y la menos calórica KFC. 
+
+Ahora se procede a analizar un gráfico de densidad de las calorías de los productos. 
 ```{r}
 FastFoodNutritionMenuV2 |> 
-  ggplot(aes(x = Calories, fill = Company)) + geom_density(alpha = 0.5)
+  ggplot(aes(x = Calories, fill = Company)) + geom_density(alpha = 0.5)+labs(title = "Gráfico de densidad del número de calorías", 
+       x = "Calorías (kcal)",
+       y = "Densidad")+theme_bw()
 ```
 
+Se observa en el gráfico que Pizza Hut concentra la mayoría de sus productos en torno a 250 calorías. Además Burguer King vuelve a mostrar que es la compañía con la concentración de productos más calóricos.
 
+Se proseguirá haciendo la media de las grasas de los productos de cada compañía. Dando como resultado el siguiente gráfico de barras:
 
 ```{r}
 FastFoodNutritionMenuV2$Total.Fat..g. <- suppressWarnings(as.numeric(as.character(FastFoodNutritionMenuV2$Total.Fat..g.)))
 
 MediaFat <- sapply(split(x=FastFoodNutritionMenuV2$Total.Fat..g., f=FastFoodNutritionMenuV2$Company), mean, na.rm = TRUE)
 
-barplot(MediaFat, main = "Grafico de madias de grasas de las compañias", xlab = "Compañias", ylab = "Grasas", col = "green")
-```
-```{r}
-FastFoodNutritionMenuV2 |> 
-  ggplot(aes(x = Total.Fat..g., fill = Company)) + geom_density(alpha = 0.5)
+barplot(MediaFat, main = "Grafico de medias de grasas de las compañías", xlab = "Compañías", ylab = "Grasas (g)", col = "green")
 ```
 
+Burguer King es la compañía con la mayor media de grasas y KFC es la compañía con la media menor.Sin embargo, Taco Bell tiene gran cantidad de grasas en sus productos.
+
+Ahora se estudiará el gráfico de densidades de las grasas de los productos.
+```{r}
+FastFoodNutritionMenuV2 |> 
+  ggplot(aes(x = Total.Fat..g., fill = Company)) + geom_density(alpha = 0.5)+labs(title = "Gráfico de densidad de los gramos de grasas", 
+       x = "Grasas (g)",
+       y = "Densidad")+theme_bw()
+```
+
+La mayoría de los productos se concentran en menos de 25 gramos de grasa y de los productos que superan ese límite, Burguer King es el que más productos posee.
+
+A continuación se muestra el gráfico de colesterol medio de cada compañía.
+
+```{r}
+FastFoodNutritionMenuV2$Cholesterol..mg. <- suppressWarnings(as.numeric(as.character(FastFoodNutritionMenuV2$Cholesterol..mg.)))
+
+MediaCholesterol <- sapply(split(x=FastFoodNutritionMenuV2$Cholesterol..mg., f=FastFoodNutritionMenuV2$Company), mean, na.rm = TRUE)
+
+barplot(MediaCholesterol, main = "Grafico de medias de colesterol de las compañías", xlab = "Compañías", ylab = "Colesterol (g)", col = "cyan")
+```
+
+Como se observa, la compañía con mayor colesterol es Taco Bell y la que menos tiene es KFC.
