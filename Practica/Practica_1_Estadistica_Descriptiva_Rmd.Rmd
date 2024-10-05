@@ -21,6 +21,8 @@ FastFoodNutritionMenuV2$Carbs..g. <- as.numeric(FastFoodNutritionMenuV2$Carbs..g
 FastFoodNutritionMenuV2$Fiber..g. <- as.numeric(FastFoodNutritionMenuV2$Fiber..g.)
 FastFoodNutritionMenuV2$Sugars..g. <- as.numeric(FastFoodNutritionMenuV2$Sugars..g.)
 FastFoodNutritionMenuV2$Protein..g. <- as.numeric(FastFoodNutritionMenuV2$Protein..g.)
+FastFoodNutritionMenuV2$Weight.Watchers.Pnts <- as.numeric(FastFoodNutritionMenuV2$Weight.Watchers.Pnts)
+
 ```
 
 Se lee el fichero y se convierte a datos numéricos las filas con las que se va a realizar los análisis. Esta conversión se debe a que el fichero se lee como cadena de caracteres y lo corregimos a datos numéricos.
@@ -96,6 +98,8 @@ Se va a empezar analizando los datos univariantes que nos permitirá comprender 
 
 ### Tablas de frecuencias
 
+#### Company
+
 Se va a mostrar las tablas de frecuencia para entender mejor la distribución de nuestras variables.
 
 
@@ -103,12 +107,12 @@ Se comenzará con la variabla"Company", para observar cómo se distribuyen las c
 Tabla para la variable "Company":
 
 ```{r}
-tabla_frecuencia <-FastFoodNutritionMenuV2 |>
+tabla_frecuencia_Company <-FastFoodNutritionMenuV2 |>
   count(Company)|> 
   mutate(f = n/nrow(FastFoodNutritionMenuV2),
          N = cumsum(n),
          F = cumsum(f))
-knitr::kable(tabla_frecuencia, digits = 4)
+knitr::kable(tabla_frecuencia_Company, digits = 4)
 ```
 
 Para una mejor representación, se realiza un gráfico de barras con las frecuencias relativas. Así, se podrá apreciar de una forma más sencilla.
@@ -129,6 +133,147 @@ FastFoodNutritionMenuV2 |>
   theme_bw() +
   labs(title = "Gráfico de barras con frecuencia absoluta de la compañía",
        x = "Nombre de la compañía", y = "Frecuencia relativa") + scale_fill_gradient("Frecuencia", low = "green", high = "cyan") + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+#### Calories
+
+```{r}
+histo <- hist(FastFoodNutritionMenuV2$Calories, plot = FALSE)
+
+tabla_frecuencias_Calories <- FastFoodNutritionMenuV2 |> count(Calories) |> mutate(f = n/nrow(FastFoodNutritionMenuV2), N= cumsum(n), F = cumsum(f))
+  
+tabla_frecuencias_Calories <- tabla_frecuencias_Calories |> mutate(clase = cut(Calories, breaks = histo$breaks)) |>
+group_by(clase) |> summarise(n = sum(n), f = sum(f), N = sum(n),  F = sum(f))
+
+tabla_frecuencias_Calories <- tabla_frecuencias_Calories |>
+  arrange(clase) |>  kable(digits = 4) 
+print(tabla_frecuencias_Calories)
+
+```
+
+#### Fat
+
+```{r}
+histo <- hist(FastFoodNutritionMenuV2$Total.Fat..g., plot = FALSE)
+
+tabla_frecuencias_Fat <- FastFoodNutritionMenuV2 |> count(Total.Fat..g.) |> mutate(f = n/nrow(FastFoodNutritionMenuV2), N= cumsum(n), F = cumsum(f))
+  
+tabla_frecuencias_Fat <- tabla_frecuencias_Fat |> mutate(clase = cut(Total.Fat..g., breaks = histo$breaks)) |>
+group_by(clase) |> summarise(n = sum(n), f = sum(f), N = sum(n),  F = sum(f))
+
+tabla_frecuencias_Fat <- tabla_frecuencias_Fat |>
+  arrange(clase) |>  kable(digits = 4) 
+print(tabla_frecuencias_Fat)
+
+```
+
+#### Cholesterol
+
+```{r}
+histo <- hist(FastFoodNutritionMenuV2$Cholesterol..mg., plot = FALSE)
+
+tabla_frecuencias_Cholesterol <- FastFoodNutritionMenuV2 |> count(Cholesterol..mg.) |> mutate(f = n/nrow(FastFoodNutritionMenuV2), N= cumsum(n), F = cumsum(f))
+  
+tabla_frecuencias_Cholesterol <- tabla_frecuencias_Cholesterol |> mutate(clase = cut(Cholesterol..mg., breaks = histo$breaks)) |>
+group_by(clase) |> summarise(n = sum(n), f = sum(f), N = sum(n),  F = sum(f))
+
+tabla_frecuencias_Cholesterol <- tabla_frecuencias_Cholesterol |>
+  arrange(clase) |>  kable(digits = 4) 
+print(tabla_frecuencias_Cholesterol)
+```
+
+#### Sodium
+
+```{r}
+histo <- hist(FastFoodNutritionMenuV2$Sodium...mg., plot = FALSE)
+
+tabla_frecuencias_Sodium <- FastFoodNutritionMenuV2 |> count(Sodium...mg.) |> mutate(f = n/nrow(FastFoodNutritionMenuV2), N= cumsum(n), F = cumsum(f))
+  
+tabla_frecuencias_Sodium <- tabla_frecuencias_Sodium |> mutate(clase = cut(Sodium...mg., breaks = histo$breaks)) |>
+group_by(clase) |> summarise(n = sum(n), f = sum(f), N = sum(n),  F = sum(f))
+
+tabla_frecuencias_Sodium <- tabla_frecuencias_Sodium |>
+  arrange(clase) |>  kable(digits = 4) 
+print(tabla_frecuencias_Sodium)
+
+```
+
+#### Carbs
+
+```{r}
+histo <- hist(FastFoodNutritionMenuV2$Carbs..g., plot = FALSE)
+
+tabla_frecuencias_Carbs <- FastFoodNutritionMenuV2 |> count(Carbs..g.) |> mutate(f = n/nrow(FastFoodNutritionMenuV2), N= cumsum(n), F = cumsum(f))
+  
+tabla_frecuencias_Carbs <- tabla_frecuencias_Carbs |> mutate(clase = cut(Carbs..g., breaks = histo$breaks)) |>
+group_by(clase) |> summarise(n = sum(n), f = sum(f), N = sum(n),  F = sum(f))
+
+tabla_frecuencias_Carbs <- tabla_frecuencias_Carbs |>
+  arrange(clase) |>  kable(digits = 4) 
+print(tabla_frecuencias_Carbs)
+
+```
+
+#### Fiber
+
+```{r}
+histo <- hist(FastFoodNutritionMenuV2$Fiber..g., plot = FALSE)
+
+tabla_frecuencias_Fiber <- FastFoodNutritionMenuV2 |> count(Fiber..g.) |> mutate(f = n/nrow(FastFoodNutritionMenuV2), N= cumsum(n), F = cumsum(f))
+  
+tabla_frecuencias_Fiber <- tabla_frecuencias_Fiber |> mutate(clase = cut(Fiber..g., breaks = histo$breaks)) |>
+group_by(clase) |> summarise(n = sum(n), f = sum(f), N = sum(n),  F = sum(f))
+
+tabla_frecuencias_Fiber <- tabla_frecuencias_Fiber |>
+  arrange(clase) |>  kable(digits = 4) 
+print(tabla_frecuencias_Fiber)
+
+```
+
+#### Sugars
+
+```{r}
+histo <- hist(FastFoodNutritionMenuV2$Sugars..g., plot = FALSE)
+
+tabla_frecuencias_Sugars <- FastFoodNutritionMenuV2 |> count(Sugars..g.) |> mutate(f = n/nrow(FastFoodNutritionMenuV2), N= cumsum(n), F = cumsum(f))
+  
+tabla_frecuencias_Sugars <- tabla_frecuencias_Sugars |> mutate(clase = cut(Sugars..g., breaks = histo$breaks)) |>
+group_by(clase) |> summarise(n = sum(n), f = sum(f), N = sum(n),  F = sum(f))
+
+tabla_frecuencias_Sugars <- tabla_frecuencias_Sugars |>
+  arrange(clase) |>  kable(digits = 4) 
+print(tabla_frecuencias_Sugars)
+
+```
+
+#### Protein
+```{r}
+histo <- hist(FastFoodNutritionMenuV2$Protein..g., plot = FALSE)
+
+tabla_frecuencias_Protein <- FastFoodNutritionMenuV2 |> count(Protein..g.) |> mutate(f = n/nrow(FastFoodNutritionMenuV2), N= cumsum(n), F = cumsum(f))
+  
+tabla_frecuencias_Protein <- tabla_frecuencias_Protein |> mutate(clase = cut(Protein..g., breaks = histo$breaks)) |>
+group_by(clase) |> summarise(n = sum(n), f = sum(f), N = sum(n),  F = sum(f))
+
+tabla_frecuencias_Protein <- tabla_frecuencias_Protein |>
+  arrange(clase) |>  kable(digits = 4) 
+print(tabla_frecuencias_Protein)
+
+```
+
+#### Weight
+```{r}
+histo <- hist(FastFoodNutritionMenuV2$Weight.Watchers.Pnts, plot = FALSE)
+
+tabla_frecuencias_Weight <- FastFoodNutritionMenuV2 |> count(Weight.Watchers.Pnts) |> mutate(f = n/nrow(FastFoodNutritionMenuV2), N= cumsum(n), F = cumsum(f))
+  
+tabla_frecuencias_Weight <- tabla_frecuencias_Weight |> mutate(clase = cut(Weight.Watchers.Pnts, breaks = histo$breaks)) |>
+group_by(clase) |> summarise(n = sum(n), f = sum(f), N = sum(n),  F = sum(f))
+
+tabla_frecuencias_Weight <- tabla_frecuencias_Weight |>
+  arrange(clase) |>  kable(digits = 4) 
+print(tabla_frecuencias_Weight)
+
 ```
 
 ## Datos bivariantes
