@@ -35,7 +35,15 @@ Se lee el fichero y se convierte a datos numéricos las filas con las que se va 
 El documento FastFoodNutritionMenuV2.csv contiene los resultados de distintos valores nutricionales obtenidos en diferentes productos de varias compañías de comida rápida.
 
 
-El objetivo de este estudio es determinar a partir de los valores nutricionales recogidos, la compañía con los productos más perjudiciales para la salud. Para ello se estudiarán varias categorías de relevancia alimenticea, como por ejemplo las grasas, la proteina, el azúcar, el colesterol... Con estos datos, se podrá confirmar cuál de las compañías es la más perjudicial para la salud.
+El objetivo de este estudio es determinar a partir de los valores nutricionales recogidos, la compañía con los productos más perjudiciales para la salud. Para ello se estudiarán varias categorías de relevancia alimenticea, como por ejemplo las grasas, la proteina, el azúcar, el colesterol... Con estos datos, se podrá confirmar cuál de las compañías es la más perjudicial para la salud. Además se tratarán de responder a las siguientes preguntas:
+
+¿Cuál es la compañía más perjudicial?
+
+¿Qué compañía es la que más grasa, proteina, calorías, azúcar tiene?
+
+¿Existe alguna relación entre alguno de los valores nutricionales como la grasa y la proteina?
+
+Mas preguntas
 
 
 # Importación de datos y carga de paquetes
@@ -110,7 +118,7 @@ gt()
 # Análisis exploratorio de datos
 
 
-Se procederá a visionar el análisis exploratorio de datos (EDA) para obtener una conclusión sobre la muestra de datos obtenida.
+Se procederá a realizar el análisis exploratorio de datos (EDA) para obtener una conclusión sobre la muestra de datos obtenida.
 
 ## Datos univariantes
 
@@ -122,9 +130,6 @@ Se va a empezar analizando los datos univariantes que nos permitirá comprender 
 
 
 #### Company
-
-
-Se va a mostrar las tablas de frecuencia para entender mejor la distribución de cada variables.
 
 
 Se comenzará con la variable "Company", para observar cómo se distribuyen las compañías de la muestra de datos.
@@ -151,7 +156,7 @@ FastFoodNutritionMenuV2  |> group_by(Company) |>  summarise(Frequency = n()) |> 
 
 Como ya se ha visto anteriomente, McDonald's es la compañía con mayor porcentaje de productos y Pizza Hut la que menos.
 
-A continuación se realiza otro gráfico con las frecuencias absolutas.
+A continuación, se realiza con la misma información un gráfico de frecuencias absolutas.
 
 
 ```{r}
@@ -170,14 +175,14 @@ Los datos productos analizados de McDonald's son 329 productos y de Pizza Hut so
 
 
 
-
-
-A continuación se realizarán tablas de frecuencia para cada variable cuantitativa empezando por las calorías. Con ello se podrá conprender cuál es el intervalo en el se encuentra la mayoría de los productos de todas las compañías.
+A continuación, se realizarán tablas de frecuencia para cada variable cuantitativa empezando por las calorías. Con ello, se podrá comprender cuál es el intervalo en el que se encuentra la mayoría de los productos de todas las compañías.
 
 
 
 #### Calorías
 
+
+Gáfico por intervalos de calorías:
 
 
 ```{r}
@@ -194,7 +199,10 @@ print(tabla_frecuencias_Calories)
 
 ```
 
+
 #### Grasas
+
+Gáfico por intervalos de grasas:
 
 ```{r}
 histo <- hist(FastFoodNutritionMenuV2$Total.Fat..g., plot = FALSE)
@@ -210,7 +218,12 @@ print(tabla_frecuencias_Fat)
 
 ```
 
+
 #### Grasas Saturadas
+
+Gáfico por intervalos de grasas saturadas:
+
+
 ```{r}
 histo <- hist(FastFoodNutritionMenuV2$Saturated.Fat..g., plot = FALSE)
 
@@ -225,7 +238,10 @@ print(tabla_frecuencias_Saturated)
 
 ```
 
+
 #### Colesterol
+
+Gáfico por intervalos de coleterol:
 
 ```{r}
 histo <- hist(FastFoodNutritionMenuV2$Cholesterol..mg., plot = FALSE)
@@ -240,7 +256,10 @@ tabla_frecuencias_Cholesterol <- tabla_frecuencias_Cholesterol |>
 print(tabla_frecuencias_Cholesterol)
 ```
 
+
 #### Sodio
+
+Gáfico por intervalos de sodio:
 
 ```{r}
 histo <- hist(FastFoodNutritionMenuV2$Sodium...mg., plot = FALSE)
@@ -256,7 +275,11 @@ print(tabla_frecuencias_Sodium)
 
 ```
 
+
 #### Carbohidratos
+
+Gáfico por intervalos de carbohidratos:
+
 
 ```{r}
 histo <- hist(FastFoodNutritionMenuV2$Carbs..g., plot = FALSE)
@@ -272,7 +295,12 @@ print(tabla_frecuencias_Carbs)
 
 ```
 
+
 #### Fibra
+
+
+Gáfico por intervalos de fibra:
+
 
 ```{r}
 histo <- hist(FastFoodNutritionMenuV2$Fiber..g., plot = FALSE)
@@ -288,7 +316,10 @@ print(tabla_frecuencias_Fiber)
 
 ```
 
+
 #### Azúcar
+
+Gáfico por intervalos de azúcar:
 
 ```{r}
 histo <- hist(FastFoodNutritionMenuV2$Sugars..g., plot = FALSE)
@@ -304,7 +335,12 @@ print(tabla_frecuencias_Sugars)
 
 ```
 
+
 #### Proteina
+
+Gáfico por intervalos de proteina:
+
+
 ```{r}
 histo <- hist(FastFoodNutritionMenuV2$Protein..g., plot = FALSE)
 
@@ -322,9 +358,18 @@ print(tabla_frecuencias_Protein)
 
 ## Datos bivariantes
 
-Ahora se procede a estudiar que compañia es la más perjudicial a partir del estudio de sus diferentes valores.
 
-Se comienzará haciendo la media de las calorías de los productos de cada compañía. Resultando el siguiente gráfico de barras:
+Se proseguirá haciendo diferentes gráficos para entender las relaciones entre las distintas variables cuantitativas y cualitativas.
+
+
+### Correlaciones y covarianzas
+
+Se procederá a estudiar las covarianzas y correlaciones de datos bivariantes.
+
+
+Primero se empezará con la correlación entre cuatro variables que se han selecionado por ser las más importantes nutricionalmente.
+
+
 
 ```{r}
 FastFoodNutritionMenuV2 |> select(Calories, Protein..g., Total.Fat..g., Cholesterol..mg.) |> 
@@ -337,15 +382,17 @@ FastFoodNutritionMenuV2 |> select(Calories, Protein..g., Total.Fat..g., Choleste
            diag = FALSE)  # Omite la diagonal principal
 ```
 
-```{r}
-FastFoodNutritionMenuV2 |> 
-  ggplot(aes(x=Company, y=Calories))+geom_boxplot()+theme_bw()
+### Gráficos en función de la compañía
 
-```
 
-Como se puede observar, la compañía más calórica es Burguer King, y la menos calórica KFC. 
+En este apartado se realizán gráficos de cajas de diferentes variables en función a la compañía en la que pertenece. 
 
-Ahora se procede a analizar un gráfico de densidad de las calorías de los productos. 
+
+#### Calorias
+
+
+Ahora se procede a analizar un gráfico de densidad de las calorías de los productos para ver la concentración de las calorías en las diferentes compañías.
+
 
 ```{r}
 FastFoodNutritionMenuV2 |> 
@@ -354,9 +401,40 @@ FastFoodNutritionMenuV2 |>
        y = "Densidad")+theme_bw()
 ```
 
-Se observa en el gráfico que Pizza Hut concentra la mayoría de sus productos en torno a 250 calorías. Además Burguer King vuelve a mostrar que es la compañía con la concentración de productos más calóricos.
+Se observa en el gráfico que Pizza Hut concentra la mayoría de sus productos en torno a 250 kcal, que coincide con las demás compañías. 
 
-A continuación se hará la media de las proteinas de los productos de cada compañía. Dando como resultado el siguiente gráfico de cajas: 
+
+Se va a realizar un gráfico de cajas de las calorías en función de las compañías, mostrando la distribución de datos en cuartiles, así como sus datos atípicos y promedios. Así se podrá ver mejor los datos.
+
+
+```{r}
+FastFoodNutritionMenuV2 |> 
+  ggplot(aes(x=Company, y=Calories))+geom_boxplot()+theme_bw()
+
+```
+
+Como se puede observar, la compañía más calórica es Burguer King, y la menos calórica KFC. McDonal's y KFC presentan la mayoría de casos atípicos siendo McDonald's el que tiene mayor concentración de estos. 
+
+
+#### Proteinas
+
+
+Se continua con un gráfico de densidad de las proteinas de los productos para ver la concentración de las proteinas en las diferentes compañías.
+
+
+```{r}
+FastFoodNutritionMenuV2 |> 
+  ggplot(aes(x = Protein..g., fill = Company)) + geom_density(alpha = 0.5)+labs(title = "Gráfico de densidad del número de proteinas", 
+       x = "Proteina (g)",
+       y = "Densidad")+theme_bw()
+```
+
+Se observa en el gráfico que la mayoría de las compañías concentran la mayoría de sus productos en torno a 15 gramos de proteina. 
+
+Se debe mencionar que KFC tiene demasiados valores nulos, por lo que los valores menores que 5 gramos no presentan una información correcta.
+
+Se proseguirá realizando un gráfico de cajas de las proteinas en función de las compañías.
+
 
 ```{r}
 FastFoodNutritionMenuV2 |> 
@@ -364,14 +442,11 @@ FastFoodNutritionMenuV2 |>
 
 ```
 
-IVÁN, PON TUS GRANDIOSOS COMENTARIOS AQUÍ. GRACIAS PAPUCHO <3
 
-```{r}
-FastFoodNutritionMenuV2 |> 
-  ggplot(aes(x = Protein..g., fill = Company)) + geom_density(alpha = 0.5)+labs(title = "Gráfico de densidad del número de calorías", 
-       x = "Proteina (g)",
-       y = "Densidad")+theme_bw()
-```
+KFC presenta una mediana que no se corresponde a la realidad debido a que hay demasiados valores nulos.
+
+Como se puede observar, la compañía Pizza Hut tiene muy concentrado los valores.
+
 
 Se proseguirá haciendo la media de las grasas de los productos de cada compañía. Dando como resultado el siguiente gráfico de cajas:
 
