@@ -327,6 +327,17 @@ Ahora se procede a estudiar que compañia es la más perjudicial a partir del es
 Se comienzará haciendo la media de las calorías de los productos de cada compañía. Resultando el siguiente gráfico de barras:
 
 ```{r}
+FastFoodNutritionMenuV2 |> select(Calories, Protein..g., Total.Fat..g., Cholesterol..mg.) |> 
+  drop_na() |> 
+  cor() |> 
+  round(2) |> 
+  corrplot(method = "ellipse",  # Usa elipses para representar correlaciones
+           type = "lower",  # Muestra solo la mitad inferior de la matriz
+           addCoef.col = "cyan",  # Color de los coeficientes de correlación
+           diag = FALSE)  # Omite la diagonal principal
+```
+
+```{r}
 FastFoodNutritionMenuV2 |> 
   ggplot(aes(x=Company, y=Calories))+geom_boxplot()+theme_bw()
 
@@ -345,7 +356,24 @@ FastFoodNutritionMenuV2 |>
 
 Se observa en el gráfico que Pizza Hut concentra la mayoría de sus productos en torno a 250 calorías. Además Burguer King vuelve a mostrar que es la compañía con la concentración de productos más calóricos.
 
-Se proseguirá haciendo la media de las grasas de los productos de cada compañía. Dando como resultado el siguiente gráfico de barras:
+A continuación se hará la media de las proteinas de los productos de cada compañía. Dando como resultado el siguiente gráfico de cajas: 
+
+```{r}
+FastFoodNutritionMenuV2 |> 
+  ggplot(aes(x=Company, y=Protein..g.))+geom_boxplot()+theme_bw()
+
+```
+
+IVÁN, PON TUS GRANDIOSOS COMENTARIOS AQUÍ. GRACIAS PAPUCHO <3
+
+```{r}
+FastFoodNutritionMenuV2 |> 
+  ggplot(aes(x = Protein..g., fill = Company)) + geom_density(alpha = 0.5)+labs(title = "Gráfico de densidad del número de calorías", 
+       x = "Proteina (g)",
+       y = "Densidad")+theme_bw()
+```
+
+Se proseguirá haciendo la media de las grasas de los productos de cada compañía. Dando como resultado el siguiente gráfico de cajas:
 
 ```{r}
 FastFoodNutritionMenuV2 |> 
@@ -373,3 +401,68 @@ FastFoodNutritionMenuV2 |>
 ```
 
 Como se observa, la compañía con mayor colesterol es Taco Bell y la que menos tiene es KFC.
+
+### Gráficos de Dispersión
+
+#### Calorias-Proteinas
+
+```{r}
+FastFoodNutritionMenuV2 |> 
+  ggplot(aes(x = Calories, y = Protein..g.)) +
+  geom_point() +
+  geom_smooth() +
+  labs(title = "Gráfico de dispersión con ajuste de regresión",
+       x= "Calorias",
+       y= "Proteinas")+theme_bw()
+```
+
+```{r}
+FastFoodNutritionMenuV2 |> 
+  ggplot(aes(x = Calories, y = Protein..g.)) +
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE) +
+  labs(title = "Gráfico de dispersión con ajuste de regresión lineal",
+       x= "Calorias",
+       y= "Proteinas")+theme_bw()
+```
+
+
+```{r}
+FastFoodNutritionMenuV2 |> 
+  ggplot(aes(x = Calories, y = Protein..g., col = Company)) +
+  geom_point() +
+  labs(title = "Gráfico de dispersión clasificado por compañias",
+       x= "Calorias",
+       y= "Proteinas")+theme_bw()
+```
+#### Grasa-Colesterol
+
+```{r}
+FastFoodNutritionMenuV2 |> 
+  ggplot(aes(x = Total.Fat..g., y = Cholesterol..mg.)) +
+  geom_point() +
+  geom_smooth() +
+  labs(title = "Gráfico de dispersión con ajuste de regresión", 
+       x = "Grasa (g)",
+       y = "Colesterol (mg)")+theme_bw()
+```
+
+```{r}
+FastFoodNutritionMenuV2 |> 
+  ggplot(aes(x = Total.Fat..g., y = Cholesterol..mg.)) +
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE) +
+   labs(title = "Gráfico de dispersión con ajuste de regresión lineal", 
+       x = "Grasa (g)",
+       y = "Colesterol (mg)")+theme_bw()
+```
+
+```{r}
+FastFoodNutritionMenuV2 |> 
+  ggplot(aes(x = Total.Fat..g., y = Cholesterol..mg. , col= Company)) +
+  geom_point() +
+   labs(title = "Gráfico de dispersión calificado por compñias", 
+       x = "Grasa (g)",
+       y = "Colesterol (mg)")+theme_bw()
+```
+
