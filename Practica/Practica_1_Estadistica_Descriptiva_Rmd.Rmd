@@ -102,6 +102,7 @@ Variables que sí se tendrán en cuenta en el estudio (nombradas por su nombre e
 
 # Muestra del dataset
 
+Yo quitaría esta parte de muestra del data set (ivan)
 
 Ahora, se va a mostrar los primeros 10 elementos de la lista total de datos, para entender mejor cómo esta estructurada la información con la que se va a trabajar.
 
@@ -168,14 +169,14 @@ FastFoodNutritionMenuV2 |>
   geom_bar(stat = "identity", aes(fill = Frequency)) +
   theme_bw() +
   labs(title = "Gráfico de barras con frecuencia absoluta de la compañía",
-       x = "Nombre de la compañía", y = "Frecuencia relativa") + scale_fill_gradient("Frecuencia", low = "green", high = "cyan") + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+       x = "Nombre de la compañía", y = "Frecuencia absoluta") + scale_fill_gradient("Frecuencia", low = "green", high = "cyan") + theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-Los datos productos analizados de McDonald's son 329 productos y de Pizza Hut son 74 productos.
+Los datos indican que los productos analizados de McDonald's son 329 productos y de Pizza Hut son 74 productos.
 
 
 
-A continuación, se realizarán tablas de frecuencia para cada variable cuantitativa empezando por las calorías. Con ello, se podrá comprender cuál es el intervalo en el que se encuentra la mayoría de los productos de todas las compañías.
+Una vez comprendido la distrubución de las conpañías, se realizarán las tablas necesarias para comprender cada variable cuantitativa empezando por las calorías. Con ello, se podrá analizar cuál es el intervalo en el que se encuentra la mayoría de los productos de todas las compañías. Y de este modo, se podrán resolver alguna de las dudas planteadas en la introducción.
 
 
 
@@ -197,7 +198,12 @@ tabla_frecuencias_Calories <- tabla_frecuencias_Calories |>
   arrange(Intervalo_de_calorias) |>  kable(digits = 4) 
 print(tabla_frecuencias_Calories)
 
+
 ```
+
+
+
+Como se observa, el intervalo más frecuente es (100,200]. Sin embargo hay 98 elementos que tienen valores nulos, esto afectará a posteriores gráficos.
 
 
 #### Grasas
@@ -217,6 +223,9 @@ tabla_frecuencias_Fat <- tabla_frecuencias_Fat |>
 print(tabla_frecuencias_Fat)
 
 ```
+
+
+La mayoria de los productos tienen de 0 a 10 gramos de grasas. Hay gran cantida de datos nulos, de hecho hay un 37% de datos nulos.
 
 
 #### Grasas Saturadas
@@ -239,6 +248,9 @@ print(tabla_frecuencias_Saturated)
 ```
 
 
+De 2 a 4 gramos de grasas saturadas, es lo más frecuente. Teniendo en cuenta que el intervalo de grasas más repetido es (0,10], tiene sentido que las grasas saturadas tengan un intervalo menor. Si realizamos la suma de todos los intervalos que entrarían en el de las grasas, da como resultado un 50.97% de los productos totales analizados.
+
+
 #### Colesterol
 
 Gáfico por intervalos de coleterol:
@@ -255,6 +267,8 @@ tabla_frecuencias_Cholesterol <- tabla_frecuencias_Cholesterol |>
   arrange(Intervalo_de_colesterol) |>  kable(digits = 4) 
 print(tabla_frecuencias_Cholesterol)
 ```
+
+El coleterol es un valor que hay que tener muy en cuenta para llevar una buena vida saludable. El intervalo más frecuente es de 0 a 50 mg. Es un valor no muy alto porque los expertos recomiendan menos de 300 mg/día, pero es preocupante que existan productos que superen ese límite.
 
 
 #### Sodio
@@ -275,6 +289,8 @@ print(tabla_frecuencias_Sodium)
 
 ```
 
+De 0 a 200 mg es el intervalo más frecuente en el sodio. Los expertos recomiendan por día para un adulto 2000 mg y para niños 1500mg. De este modo el sodio está dentro del límite recomendado y es muy raro que un producto de los analizados supere ese límite.
+
 
 #### Carbohidratos
 
@@ -287,11 +303,13 @@ histo <- hist(FastFoodNutritionMenuV2$Carbs..g., plot = FALSE)
 tabla_frecuencias_Carbs <- FastFoodNutritionMenuV2 |> count(Carbs..g.) |> mutate(f = n/nrow(FastFoodNutritionMenuV2), N= cumsum(n), F = cumsum(f))
   
 tabla_frecuencias_Carbs <- tabla_frecuencias_Carbs |> mutate(Intervalo_de_carbohidratos = cut(Carbs..g., breaks = histo$breaks)) |>
-group_by(Intervalo_de_carbohidratos) |> summarise(n = sum(n), f = sum(f), N = sum(n),  F = sum(f))
+group_by(Intervalo_de_carbohidratos) |> summarise(n = sum(n), f = sum(f), N = cumsum(n),  F = cumsum(f))
 
 tabla_frecuencias_Carbs <- tabla_frecuencias_Carbs |>
   arrange(Intervalo_de_carbohidratos) |>  kable(digits = 4) 
+
 print(tabla_frecuencias_Carbs)
+
 
 ```
 
