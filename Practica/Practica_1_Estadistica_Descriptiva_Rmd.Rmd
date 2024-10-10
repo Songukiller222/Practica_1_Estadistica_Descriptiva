@@ -127,7 +127,7 @@ Se procederá a realizar el análisis exploratorio de datos (EDA) para obtener u
 Se va a empezar analizando los datos univariantes que nos permitirá comprender la distribución y frecuencia de cada variable. Tras ello, se podrá entender mejor como está repartida cada variable.
 
 
-### Tablas de frecuencias
+### Tablas de frecuencia 
 
 
 #### Company
@@ -189,21 +189,25 @@ Gáfico por intervalos de calorías:
 ```{r}
 histo <- hist(FastFoodNutritionMenuV2$Calories, plot = FALSE)
 
-tabla_frecuencias_Calories <- FastFoodNutritionMenuV2 |> count(Calories) |> mutate(f = n/nrow(FastFoodNutritionMenuV2), N= cumsum(n), F = cumsum(f))
-  
-tabla_frecuencias_Calories <- tabla_frecuencias_Calories |> mutate(Intervalo_de_calorias= cut(Calories, breaks = histo$breaks)) |>
-group_by(Intervalo_de_calorias) |> summarise(n = sum(n), f = sum(f), N = sum(n),  F = sum(f))
+FastFoodNutritionMenuV2 <- FastFoodNutritionMenuV2 |>
+  mutate(Intervalo_de_calorias = cut(Calories, breaks = histo$breaks))
+
+tabla_frecuencias_Calories <- FastFoodNutritionMenuV2 |>
+  group_by(Intervalo_de_calorias) |>
+  summarise(n = n(), f = n() / nrow(FastFoodNutritionMenuV2)) |>
+  mutate(N = cumsum(n), F = cumsum(f))
 
 tabla_frecuencias_Calories <- tabla_frecuencias_Calories |>
-  arrange(Intervalo_de_calorias) |>  kable(digits = 4) 
+  arrange(Intervalo_de_calorias) |>
+  kable(digits = 4)
+
 print(tabla_frecuencias_Calories)
-
-
 ```
 
 
 
 Como se observa, el intervalo más frecuente es (100,200]. Sin embargo hay 98 elementos que tienen valores nulos, esto afectará a posteriores gráficos.
+
 
 
 #### Grasas
@@ -213,13 +217,18 @@ Gáfico por intervalos de grasas:
 ```{r}
 histo <- hist(FastFoodNutritionMenuV2$Total.Fat..g., plot = FALSE)
 
-tabla_frecuencias_Fat <- FastFoodNutritionMenuV2 |> count(Total.Fat..g.) |> mutate(f = n/nrow(FastFoodNutritionMenuV2), N= cumsum(n), F = cumsum(f))
-  
-tabla_frecuencias_Fat <- tabla_frecuencias_Fat |> mutate(Intervalo_de_grasas = cut(Total.Fat..g., breaks = histo$breaks)) |>
-group_by(Intervalo_de_grasas) |> summarise(n = sum(n), f = sum(f), N = sum(n),  F = sum(f))
+FastFoodNutritionMenuV2 <- FastFoodNutritionMenuV2 |>
+  mutate(Intervalo_de_grasas = cut(Total.Fat..g., breaks = histo$breaks))
+
+tabla_frecuencias_Fat <- FastFoodNutritionMenuV2 |>
+  group_by(Intervalo_de_grasas) |>
+  summarise(n = n(), f = n() / nrow(FastFoodNutritionMenuV2)) |>
+  mutate(N = cumsum(n), F = cumsum(f))
 
 tabla_frecuencias_Fat <- tabla_frecuencias_Fat |>
-  arrange(Intervalo_de_grasas) |>  kable(digits = 4) 
+  arrange(Intervalo_de_grasas) |>
+  kable(digits = 4)
+
 print(tabla_frecuencias_Fat)
 
 ```
@@ -236,13 +245,18 @@ Gáfico por intervalos de grasas saturadas:
 ```{r}
 histo <- hist(FastFoodNutritionMenuV2$Saturated.Fat..g., plot = FALSE)
 
-tabla_frecuencias_Saturated <- FastFoodNutritionMenuV2 |> count(Saturated.Fat..g.) |> mutate(f = n/nrow(FastFoodNutritionMenuV2), N= cumsum(n), F = cumsum(f))
-  
-tabla_frecuencias_Saturated <- tabla_frecuencias_Saturated |> mutate(Intervalo_de_grasas_saturadas = cut(Saturated.Fat..g., breaks = histo$breaks)) |>
-group_by(Intervalo_de_grasas_saturadas) |> summarise(n = sum(n), f = sum(f), N = sum(n),  F = sum(f))
+FastFoodNutritionMenuV2 <- FastFoodNutritionMenuV2 |>
+  mutate(Intervalo_de_saturadas = cut(Saturated.Fat..g., breaks = histo$breaks))
+
+tabla_frecuencias_Saturated <- FastFoodNutritionMenuV2 |>
+  group_by(Intervalo_de_saturadas) |>
+  summarise(n = n(), f = n() / nrow(FastFoodNutritionMenuV2)) |>
+  mutate(N = cumsum(n), F = cumsum(f))
 
 tabla_frecuencias_Saturated <- tabla_frecuencias_Saturated |>
-  arrange(Intervalo_de_grasas_saturadas) |>  kable(digits = 4) 
+  arrange(Intervalo_de_saturadas) |>
+  kable(digits = 4)
+
 print(tabla_frecuencias_Saturated)
 
 ```
@@ -253,18 +267,23 @@ De 2 a 4 gramos de grasas saturadas, es lo más frecuente. Teniendo en cuenta qu
 
 #### Colesterol
 
-Gáfico por intervalos de coleterol:
+Gáfico por intervalos de colesterol:
 
 ```{r}
 histo <- hist(FastFoodNutritionMenuV2$Cholesterol..mg., plot = FALSE)
 
-tabla_frecuencias_Cholesterol <- FastFoodNutritionMenuV2 |> count(Cholesterol..mg.) |> mutate(f = n/nrow(FastFoodNutritionMenuV2), N= cumsum(n), F = cumsum(f))
-  
-tabla_frecuencias_Cholesterol <- tabla_frecuencias_Cholesterol |> mutate(Intervalo_de_colesterol = cut(Cholesterol..mg., breaks = histo$breaks)) |>
-group_by(Intervalo_de_colesterol) |> summarise(n = sum(n), f = sum(f), N = sum(n),  F = sum(f))
+FastFoodNutritionMenuV2 <- FastFoodNutritionMenuV2 |>
+  mutate(Intervalo_de_colesterol = cut(Cholesterol..mg., breaks = histo$breaks))
+
+tabla_frecuencias_Cholesterol <- FastFoodNutritionMenuV2 |>
+  group_by(Intervalo_de_colesterol) |>
+  summarise(n = n(), f = n() / nrow(FastFoodNutritionMenuV2)) |>
+  mutate(N = cumsum(n), F = cumsum(f))
 
 tabla_frecuencias_Cholesterol <- tabla_frecuencias_Cholesterol |>
-  arrange(Intervalo_de_colesterol) |>  kable(digits = 4) 
+  arrange(Intervalo_de_colesterol) |>
+  kable(digits = 4)
+
 print(tabla_frecuencias_Cholesterol)
 ```
 
@@ -278,15 +297,19 @@ Gáfico por intervalos de sodio:
 ```{r}
 histo <- hist(FastFoodNutritionMenuV2$Sodium...mg., plot = FALSE)
 
-tabla_frecuencias_Sodium <- FastFoodNutritionMenuV2 |> count(Sodium...mg.) |> mutate(f = n/nrow(FastFoodNutritionMenuV2), N= cumsum(n), F = cumsum(f))
-  
-tabla_frecuencias_Sodium <- tabla_frecuencias_Sodium |> mutate(Intervalo_de_sodio = cut(Sodium...mg., breaks = histo$breaks)) |>
-group_by(Intervalo_de_sodio) |> summarise(n = sum(n), f = sum(f), N = sum(n),  F = sum(f))
+FastFoodNutritionMenuV2 <- FastFoodNutritionMenuV2 |>
+  mutate(Intervalo_de_sodio = cut(Sodium...mg., breaks = histo$breaks))
+
+tabla_frecuencias_Sodium <- FastFoodNutritionMenuV2 |>
+  group_by(Intervalo_de_sodio) |>
+  summarise(n = n(), f = n() / nrow(FastFoodNutritionMenuV2)) |>
+  mutate(N = cumsum(n), F = cumsum(f))
 
 tabla_frecuencias_Sodium <- tabla_frecuencias_Sodium |>
-  arrange(Intervalo_de_sodio) |>  kable(digits = 4) 
-print(tabla_frecuencias_Sodium)
+  arrange(Intervalo_de_sodio) |>
+  kable(digits = 4)
 
+print(tabla_frecuencias_Sodium)
 ```
 
 De 0 a 200 mg es el intervalo más frecuente en el sodio. Los expertos recomiendan por día para un adulto 2000 mg y para niños 1500mg. De este modo el sodio está dentro del límite recomendado y es muy raro que un producto de los analizados supere ese límite.
@@ -300,13 +323,17 @@ Gáfico por intervalos de carbohidratos:
 ```{r}
 histo <- hist(FastFoodNutritionMenuV2$Carbs..g., plot = FALSE)
 
-tabla_frecuencias_Carbs <- FastFoodNutritionMenuV2 |> count(Carbs..g.) |> mutate(f = n/nrow(FastFoodNutritionMenuV2), N= cumsum(n), F = cumsum(f))
-  
-tabla_frecuencias_Carbs <- tabla_frecuencias_Carbs |> mutate(Intervalo_de_carbohidratos = cut(Carbs..g., breaks = histo$breaks)) |>
-group_by(Intervalo_de_carbohidratos) |> summarise(n = sum(n), f = sum(f), N = cumsum(n),  F = cumsum(f))
+FastFoodNutritionMenuV2 <- FastFoodNutritionMenuV2 |>
+  mutate(Intervalo_de_carbohidratos = cut(Carbs..g., breaks = histo$breaks))
+
+tabla_frecuencias_Carbs <- FastFoodNutritionMenuV2 |>
+  group_by(Intervalo_de_carbohidratos) |>
+  summarise(n = n(), f = n() / nrow(FastFoodNutritionMenuV2)) |>
+  mutate(N = cumsum(n), F = cumsum(f))
 
 tabla_frecuencias_Carbs <- tabla_frecuencias_Carbs |>
-  arrange(Intervalo_de_carbohidratos) |>  kable(digits = 4) 
+  arrange(Intervalo_de_carbohidratos) |>
+  kable(digits = 4)
 
 print(tabla_frecuencias_Carbs)
 
@@ -323,13 +350,18 @@ Gáfico por intervalos de fibra:
 ```{r}
 histo <- hist(FastFoodNutritionMenuV2$Fiber..g., plot = FALSE)
 
-tabla_frecuencias_Fiber <- FastFoodNutritionMenuV2 |> count(Fiber..g.) |> mutate(f = n/nrow(FastFoodNutritionMenuV2), N= cumsum(n), F = cumsum(f))
-  
-tabla_frecuencias_Fiber <- tabla_frecuencias_Fiber |> mutate(Intervalo_de_fibra = cut(Fiber..g., breaks = histo$breaks)) |>
-group_by(Intervalo_de_fibra) |> summarise(n = sum(n), f = sum(f), N = sum(n),  F = sum(f))
+FastFoodNutritionMenuV2 <- FastFoodNutritionMenuV2 |>
+  mutate(Intervalo_de_fibra = cut(Fiber..g., breaks = histo$breaks))
+
+tabla_frecuencias_Fiber <- FastFoodNutritionMenuV2 |>
+  group_by(Intervalo_de_fibra) |>
+  summarise(n = n(), f = n() / nrow(FastFoodNutritionMenuV2)) |>
+  mutate(N = cumsum(n), F = cumsum(f))
 
 tabla_frecuencias_Fiber <- tabla_frecuencias_Fiber |>
-  arrange(Intervalo_de_fibra) |>  kable(digits = 4) 
+  arrange(Intervalo_de_fibra) |>
+  kable(digits = 4)
+
 print(tabla_frecuencias_Fiber)
 
 ```
@@ -342,13 +374,18 @@ Gáfico por intervalos de azúcar:
 ```{r}
 histo <- hist(FastFoodNutritionMenuV2$Sugars..g., plot = FALSE)
 
-tabla_frecuencias_Sugars <- FastFoodNutritionMenuV2 |> count(Sugars..g.) |> mutate(f = n/nrow(FastFoodNutritionMenuV2), N= cumsum(n), F = cumsum(f))
-  
-tabla_frecuencias_Sugars <- tabla_frecuencias_Sugars |> mutate(Intervalo_de_azucar = cut(Sugars..g., breaks = histo$breaks)) |>
-group_by(Intervalo_de_azucar) |> summarise(n = sum(n), f = sum(f), N = sum(n),  F = sum(f))
+FastFoodNutritionMenuV2 <- FastFoodNutritionMenuV2 |>
+  mutate(Intervalo_de_azucar = cut(Sugars..g., breaks = histo$breaks))
+
+tabla_frecuencias_Sugars <- FastFoodNutritionMenuV2 |>
+  group_by(Intervalo_de_azucar) |>
+  summarise(n = n(), f = n() / nrow(FastFoodNutritionMenuV2)) |>
+  mutate(N = cumsum(n), F = cumsum(f))
 
 tabla_frecuencias_Sugars <- tabla_frecuencias_Sugars |>
-  arrange(Intervalo_de_azucar) |>  kable(digits = 4) 
+  arrange(Intervalo_de_azucar) |>
+  kable(digits = 4)
+
 print(tabla_frecuencias_Sugars)
 
 ```
@@ -362,17 +399,29 @@ Gáfico por intervalos de proteina:
 ```{r}
 histo <- hist(FastFoodNutritionMenuV2$Protein..g., plot = FALSE)
 
-tabla_frecuencias_Protein <- FastFoodNutritionMenuV2 |> count(Protein..g.) |> mutate(f = n/nrow(FastFoodNutritionMenuV2), N= cumsum(n), F = cumsum(f))
-  
-tabla_frecuencias_Protein <- tabla_frecuencias_Protein |> mutate(Intervalo_de_proteina = cut(Protein..g., breaks = histo$breaks)) |>
-group_by(Intervalo_de_proteina) |> summarise(n = sum(n), f = sum(f), N = sum(n),  F = sum(f))
+FastFoodNutritionMenuV2 <- FastFoodNutritionMenuV2 |>
+  mutate(Intervalo_de_proteinas = cut(Protein..g., breaks = histo$breaks))
+
+tabla_frecuencias_Protein <- FastFoodNutritionMenuV2 |>
+  group_by(Intervalo_de_proteinas) |>
+  summarise(n = n(), f = n() / nrow(FastFoodNutritionMenuV2)) |>
+  mutate(N = cumsum(n), F = cumsum(f))
 
 tabla_frecuencias_Protein <- tabla_frecuencias_Protein |>
-  arrange(Intervalo_de_proteina) |>  kable(digits = 4) 
+  arrange(Intervalo_de_proteinas) |>
+  kable(digits = 4)
+
 print(tabla_frecuencias_Protein)
 
 ```
 
+
+### Resumen Numérico
+Para acabar con el estudio univariante, se hará un resumen numérico comparando los valores de todas las variables
+
+```{r}
+FastFoodNutritionMenuV2 |> select(Calories, Total.Fat..g., Saturated.Fat..g.,  Cholesterol..mg., Sodium...mg., Carbs..g., Fiber..g., Sugars..g., Protein..g.) |> descr() 
+```
 
 ## Datos bivariantes
 
@@ -390,14 +439,7 @@ Primero se empezará con la correlación entre cuatro variables que se han selec
 
 
 ```{r}
-FastFoodNutritionMenuV2 |> select(Calories, Protein..g., Total.Fat..g., Cholesterol..mg.) |> 
-  drop_na() |> 
-  cor() |> 
-  round(2) |> 
-  corrplot(method = "ellipse",  # Usa elipses para representar correlaciones
-           type = "lower",  # Muestra solo la mitad inferior de la matriz
-           addCoef.col = "cyan",  # Color de los coeficientes de correlación
-           diag = FALSE)  # Omite la diagonal principal
+FastFoodNutritionMenuV2 |> select(Calories, Protein..g., Total.Fat..g., Cholesterol..mg.) |> drop_na() |> cor() |> round(2) |> corrplot(method = "ellipse", type = "lower",addCoef.col = "cyan", diag = FALSE)
 ```
 
 ### Gráficos en función de la compañía
@@ -427,7 +469,7 @@ Se va a realizar un gráfico de cajas de las calorías en función de las compa�
 
 ```{r}
 FastFoodNutritionMenuV2 |> 
-  ggplot(aes(x=Company, y=Calories))+geom_boxplot()+theme_bw()
+  ggplot(aes(x=Company, y=Calories))+geom_boxplot()+theme_bw()+labs(y = "Calorías (kcal)",x = "Compañia")
 
 ```
 
@@ -456,24 +498,18 @@ Se proseguirá realizando un gráfico de cajas de las proteinas en función de l
 
 ```{r}
 FastFoodNutritionMenuV2 |> 
-  ggplot(aes(x=Company, y=Protein..g.))+geom_boxplot()+theme_bw()
+  ggplot(aes(x=Company, y=Protein..g.))+geom_boxplot()+theme_bw()+labs(y = "Proteina (g)",x = "Compañia")
 
 ```
 
 
-KFC presenta una mediana que no se corresponde a la realidad debido a que hay demasiados valores nulos.
+Como se ha visto en el gráfico anterior, KFC presenta una mediana que no se corresponde a la realidad debido a que hay demasiados valores nulos.
 
-Como se puede observar, la compañía Pizza Hut tiene muy concentrado los valores.
+Además, la compañía Pizza Hut tiene muy concentrado los valores, estando todo concentrado entre 5 y 20 g de proteina.
 
 
-Se proseguirá haciendo la media de las grasas de los productos de cada compañía. Dando como resultado el siguiente gráfico de cajas:
+#### Grasas 
 
-```{r}
-FastFoodNutritionMenuV2 |> 
-  ggplot(aes(x=Company, y=Total.Fat..g.))+geom_boxplot()+theme_bw()
-```
-
-Burguer King es la compañía con la mayor media de grasas y KFC es la compañía con la media menor.Sin embargo, Taco Bell tiene gran cantidad de grasas en sus productos.
 
 Ahora se estudiará el gráfico de densidades de las grasas de los productos.
 
@@ -486,14 +522,34 @@ FastFoodNutritionMenuV2 |>
 
 La mayoría de los productos se concentran en menos de 25 gramos de grasa y de los productos que superan ese límite, Burguer King es el que más productos posee.
 
-A continuación se muestra el gráfico de colesterol medio de cada compañía.
+En este gráfico tambien se puede ver que los valores de KFC se encuentran en su mayoría en 0, lo que se verá reflejado en el gráfico siguiente, el gráfico de cajas de la variable Total.Fat..g., es decir, de las grasas de cada producto en función de su compañía.
 
 ```{r}
 FastFoodNutritionMenuV2 |> 
-  ggplot(aes(x=Company, y=Cholesterol..mg.))+geom_boxplot()+theme_bw()
+  ggplot(aes(x=Company, y=Total.Fat..g.))+geom_boxplot()+theme_bw()+labs(y = "Grasas (g)",x = "Compañia")
 ```
 
-Como se observa, la compañía con mayor colesterol es Taco Bell y la que menos tiene es KFC.
+Burguer King es la compañía con la mayor amplitud en el numero de grasas de sus productos, y, como ya se prevenía con el gráfico anterior, muchos de los datos de KFC se pierden al tener tantos valores nulos, teniendo su mediana en 0.
+
+
+#### Colesterol
+
+```{r}
+FastFoodNutritionMenuV2 |> 
+  ggplot(aes(x = Cholesterol..mg., fill = Company)) + geom_density(alpha = 0.5)+labs(title = "Gráfico de densidad de los gramos de grasas", 
+       x = "Colesterol (mg)",
+       y = "Densidad")+theme_bw()
+```
+Con este gráfico se puede ver como la mayoría de productos tienen su colesterol en menos de 100, pero que hay unos cuantos productos de cada compañía que tienen bastante más
+
+A continuación se muestra el gráfico de cajas de colesterol:
+
+```{r}
+FastFoodNutritionMenuV2 |> 
+  ggplot(aes(x=Company, y=Cholesterol..mg.))+geom_boxplot()+theme_bw()+labs(y = "Colesterol (mg)",x = "Compañia")
+```
+
+Con ello, se confirma que en esta variable se encuentran muchos casos atípicos para todas las compañías a escepción de Pizza Hut, que no tiene ninguno, unos valores que llegan a ser 500 veces mayores que la mediana de su compañía.
 
 ### Gráficos de Dispersión
 
