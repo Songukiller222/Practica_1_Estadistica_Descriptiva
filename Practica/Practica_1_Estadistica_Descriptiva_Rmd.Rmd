@@ -43,7 +43,7 @@ El objetivo de este estudio es determinar a partir de los valores nutricionales 
 
 ¿Existe alguna relación entre alguno de los valores nutricionales como la grasa y la proteina?
 
-Mas preguntas
+
 
 
 # Importación de datos y carga de paquetes
@@ -102,7 +102,6 @@ Variables que sí se tendrán en cuenta en el estudio (nombradas por su nombre e
 
 # Muestra del dataset
 
-Yo quitaría esta parte de muestra del data set (ivan)
 
 Ahora, se va a mostrar los primeros 10 elementos de la lista total de datos, para entender mejor cómo esta estructurada la información con la que se va a trabajar.
 
@@ -127,7 +126,7 @@ Se procederá a realizar el análisis exploratorio de datos (EDA) para obtener u
 Se va a empezar analizando los datos univariantes que nos permitirá comprender la distribución y frecuencia de cada variable. Tras ello, se podrá entender mejor como está repartida cada variable.
 
 
-### Tablas de frecuencia 
+### Tablas de frecuencias
 
 
 #### Company
@@ -180,7 +179,11 @@ Una vez comprendido la distrubución de las conpañías, se realizarán las tabl
 
 
 
+
+
 #### Calorías
+
+
 
 
 Gáfico por intervalos de calorías:
@@ -210,7 +213,10 @@ Como se observa, el intervalo más frecuente es (100,200]. Sin embargo hay 98 el
 
 
 
+
 #### Grasas
+
+
 
 Gáfico por intervalos de grasas:
 
@@ -234,10 +240,14 @@ print(tabla_frecuencias_Fat)
 ```
 
 
-La mayoria de los productos tienen de 0 a 10 gramos de grasas. Hay gran cantida de datos nulos, de hecho hay un 37% de datos nulos.
+La mayoría de los productos tienen de 0 a 10 gramos de grasas. Hay gran cantidad de datos nulos, de hecho hay un 37% de datos nulos.
+
+
 
 
 #### Grasas Saturadas
+
+
 
 Gáfico por intervalos de grasas saturadas:
 
@@ -262,10 +272,14 @@ print(tabla_frecuencias_Saturated)
 ```
 
 
-De 2 a 4 gramos de grasas saturadas, es lo más frecuente. Teniendo en cuenta que el intervalo de grasas más repetido es (0,10], tiene sentido que las grasas saturadas tengan un intervalo menor. Si realizamos la suma de todos los intervalos que entrarían en el de las grasas, da como resultado un 50.97% de los productos totales analizados.
+De 2 a 4 gramos de grasas saturadas, es lo más frecuente. Teniendo en cuenta que el intervalo de grasas más repetido es (0,10], tiene sentido que las grasas saturadas tengan un intervalo menor. Si realizamos la suma de todos los intervalos que entrarían en el de las grasas, da como resultado un 50.96% de los productos totales analizados.
+
+
 
 
 #### Colesterol
+
+
 
 Gáfico por intervalos de colesterol:
 
@@ -290,7 +304,11 @@ print(tabla_frecuencias_Cholesterol)
 El coleterol es un valor que hay que tener muy en cuenta para llevar una buena vida saludable. El intervalo más frecuente es de 0 a 50 mg. Es un valor no muy alto porque los expertos recomiendan menos de 300 mg/día, pero es preocupante que existan productos que superen ese límite.
 
 
+
+
 #### Sodio
+
+
 
 Gáfico por intervalos de sodio:
 
@@ -315,7 +333,11 @@ print(tabla_frecuencias_Sodium)
 De 0 a 200 mg es el intervalo más frecuente en el sodio. Los expertos recomiendan por día para un adulto 2000 mg y para niños 1500mg. De este modo el sodio está dentro del límite recomendado y es muy raro que un producto de los analizados supere ese límite.
 
 
+
+
 #### Carbohidratos
+
+
 
 Gáfico por intervalos de carbohidratos:
 
@@ -341,7 +363,14 @@ print(tabla_frecuencias_Carbs)
 ```
 
 
+El intervalo más frecuente de carbohidratos de (20,40] g. Lo recomendable es 135 gramos para una persona y 175 gramos para embarazadas. Los carbihidratos están dentro de los límites en la mayoría de compañías.
+
+
+
+
 #### Fibra
+
+
 
 
 Gáfico por intervalos de fibra:
@@ -367,7 +396,14 @@ print(tabla_frecuencias_Fiber)
 ```
 
 
+De 0 a 2 gramos es lo más frecuente en la fibra y lo recomendable son de 20 a 35 gramos. Si comprobamos todos los productos que estén dentro de ese intervalo, el 100% de los productos lo cumplen. Así que respecto a la fibra, todas las compañías respetan los límites establecidos.
+
+
+
+
 #### Azúcar
+
+
 
 Gáfico por intervalos de azúcar:
 
@@ -391,7 +427,14 @@ print(tabla_frecuencias_Sugars)
 ```
 
 
+El azúcar es un valor a tener en cuenta. Es el principal responsable del sobrepeso y ha de tomarse en cantidades adecuadas. Lo que se recomienda es de 50 a 60 gramos en adultos y 30 a 35 en niños. El intervalo más frecuente es de 0 a 20 gramos, lo que entra dentro de los límites. Si miramos los productos que podría tomar un adulto, estos nos salen un 68.64% de ellos. Sin embargo, los niños solo podrían tomar menos del 57.06% de estos.
+
+
+
+
 #### Proteina
+
+
 
 Gáfico por intervalos de proteina:
 
@@ -416,6 +459,9 @@ print(tabla_frecuencias_Protein)
 ```
 
 
+El intervalo más frecuente es de 5 a 10 gramos de proteína. Lo recomendable es 0.8 gramos or cada kilo de peso. Suponiendo que un hombre promedio pesa 77.5 kilos y una mujer promedio 63.5 kilos, sería 62 gramos y 50.8 gramos respectivamente. De este modo las proteinas respetan el límite predefinido.
+
+
 ### Resumen Numérico
 Para acabar con el estudio univariante, se hará un resumen numérico comparando los valores de todas las variables
 
@@ -433,8 +479,17 @@ Se proseguirá haciendo diferentes gráficos para entender las relaciones entre 
 
 Se procederá a estudiar las covarianzas y correlaciones de datos bivariantes.
 
+Gráfico de covarianza entre cuatro variables que se han selecionado por ser las más importantes nutricionalmente.
 
-Primero se empezará con la correlación entre cuatro variables que se han selecionado por ser las más importantes nutricionalmente.
+
+```{R}
+FastFoodNutritionMenuV2 |> select(Calories, Protein..g., Total.Fat..g., Cholesterol..mg.) |>  
+  drop_na() |> 
+  cov() |>  
+ round(4) 
+``` 
+
+Debido a que los valores de la covarianza no están normalizados, se procederá a hacer el gráfico de la correlación para facilitar la observación de las relaciones lineales:
 
 
 
@@ -442,10 +497,13 @@ Primero se empezará con la correlación entre cuatro variables que se han selec
 FastFoodNutritionMenuV2 |> select(Calories, Protein..g., Total.Fat..g., Cholesterol..mg.) |> drop_na() |> cor() |> round(2) |> corrplot(method = "ellipse", type = "lower",addCoef.col = "cyan", diag = FALSE)
 ```
 
+Como se puede observar, la correlación entre todos los valores tienen una relación lineal positiva. Siendo Colesterol-Calorias las variables que tienen menos relación lineal y GrasaTotal-Calorias las variables con más relación lineal.
+
+  
 ### Gráficos en función de la compañía
 
 
-En este apartado se realizán gráficos de cajas de diferentes variables en función a la compañía en la que pertenece. 
+En este apartado se realizán gráficos de cajas y de densidad de diferentes variables en función a la compañía en la que pertenece. 
 
 
 #### Calorias
@@ -540,9 +598,12 @@ FastFoodNutritionMenuV2 |>
        x = "Colesterol (mg)",
        y = "Densidad")+theme_bw()
 ```
+
+
 Con este gráfico se puede ver como la mayoría de productos tienen su colesterol en menos de 100, pero que hay unos cuantos productos de cada compañía que tienen bastante más
 
 A continuación se muestra el gráfico de cajas de colesterol:
+
 
 ```{r}
 FastFoodNutritionMenuV2 |> 
@@ -553,7 +614,13 @@ Con ello, se confirma que en esta variable se encuentran muchos casos atípicos 
 
 ### Gráficos de Dispersión
 
+Se van a realizar varios gráficos de dispersión para ver las relaciones entre las diferentes variables.
+
+
 #### Calorias-Proteinas
+
+Se comenzará haciendo un estudio de las relaciones entre las variables de proteínas y calorías, viendo en primer lugar sus ajustes de regresión en general, y prosiguiendo con un estudio más a fondo de cómo interactuán según la compañía a la que pertenezcan.
+
 
 ```{r}
 FastFoodNutritionMenuV2 |> 
@@ -575,6 +642,10 @@ FastFoodNutritionMenuV2 |>
        y= "Proteinas")+theme_bw()
 ```
 
+Al estudiar la dispersión entre las proteínas y las calorías y al comparar el ajuste de regresión realizado en ambos gráficos, se observa de manera muy visual como se asemejan bastante. Es decir, el gráfico realizado en primer lugar, el cual la línea de regresión se ajusta a todos los valores dados y no se realiza en línea recta como en el siguiente, es muy parecido a una recta, no solo en la zona inicial, dónde se concentran la mayor parte de datos, sino durante toda la gráfica, manteniéndose incluso al final donde no hay apenas valores.
+
+Con esto vemos como estas dos variables están muy relacionadas, pues se han obtenido unos resultados muy similares. A continuación se verá como se ve en función de las compañias, omitiendo el ajuste de regresión:
+
 
 ```{r}
 FastFoodNutritionMenuV2 |> 
@@ -584,7 +655,18 @@ FastFoodNutritionMenuV2 |>
        x= "Calorias",
        y= "Proteinas")+theme_bw()
 ```
+
+Con este gráfico se puede apreciar muy bien las relaciones de cada compañía. En primer lugar se observa como Pizza Hut concentra todos sus valores al inicio, entre 500 kcal y 20 gramos de proteínas, estando muy concentrados y en línea recta. Por lo que es la compañía que posee una relación lineal más positiva. No tan concentrado como este, se puede ver como Burger King también tiene una relación bastante positva, pero en este caso como ya se ha mencionado, se encuentran más dispersos sus valores, llegando hasta las 1250 kcal y 70 gramos de proteínas.
+
+Wendy's y McDonald's son todavía más dispersos, pero se sigue manteniendo una relación lineal positiva en casi todos sus valores. En cambio, se puede observar como KFC y sobre todo en Taco Bell, comienzan con una relación positiva, pero cuanto más avanza más disminye dicha relación, llegando incluso a ser una relación lineal negativa.
+
+
 #### Grasa-Colesterol
+
+
+Por último, se procede a analizar la relación entre las variables grasas (g) y la variable Colesterol (mg), comenzando con un estudio de la dispersión con ajustes de regresión. Después un analisis más a fondo con una regresión lineal y un estudio de cada compañía a la que pertenece.
+
+
 
 ```{r}
 FastFoodNutritionMenuV2 |> 
@@ -596,6 +678,10 @@ FastFoodNutritionMenuV2 |>
        y = "Colesterol (mg)")+theme_bw()
 ```
 
+En este gráfico se puede observar como al principio se tiene una dispersión lineal positiva contínua, pero según se avanza en la gráfica, a partir del punto(28,100) la pendiente empieza a aumentar hasta llegar al punto (62,225). En ese punto, la gráfica cambia de dirección y comienza una dispersión de valor negativo. De modo que hasta el punto (62,225) se puede aproximar la gráfica a una recta, sin embargo después del punto se aproxima más a una parábola concáva.
+
+
+
 ```{r}
 FastFoodNutritionMenuV2 |> 
   ggplot(aes(x = Total.Fat..g., y = Cholesterol..mg.)) +
@@ -606,6 +692,9 @@ FastFoodNutritionMenuV2 |>
        y = "Colesterol (mg)")+theme_bw()
 ```
 
+Se puede observar en esta gráfica una regresión lineal positiva constante, donde la mayor parte de los productos se encuentran en el intervalo (0,28) de la variable grasas y (0,100) de la variable Colesterol. Así que, las variables colesterol y grasa están relacionadas con una recta con pendiente positiva.
+
+
 ```{r}
 FastFoodNutritionMenuV2 |> 
   ggplot(aes(x = Total.Fat..g., y = Cholesterol..mg. , col= Company)) +
@@ -614,4 +703,17 @@ FastFoodNutritionMenuV2 |>
        x = "Grasa (g)",
        y = "Colesterol (mg)")+theme_bw()
 ```
+
+En este otro gráfico se puede estudiar en qué intervalos de la gráfica de dispersión Grasa-Colesterol está cada compañía. Por ejemplo, se ve cómo todos los productos de Pizza Hut se encuentran encerrados en el intervalo (0,25) grasas y (0,50) colesterol, exceptuando un producto atípico que sobrepasa los 25 gramos de grasas. Por otro lado, podemos apreciar que Burguer King posee el mayor número de productos dispersos de la tabla en comparación con las otras compañías. Rebasando los 80 gramos de grasa y llegando casi a los 400 mg de colesterol. Por otra parte, se aprecia que la compañía McDonald's posee los productos con más colesterol, llegando a alcanzar casi los 600 mg. Así mismo, KFC posee el producto con más grasas, consiguiendo casi los 100 gramos de grasas.
+
+
+# Conclusión
+
+A lo largo de este estudio, se ha visto la distribución de las compañías en los datos obtenidos. También las frecuencias absolutas y relativas de cada variable cuantitativa, para comprender sus frecuencias en intervalos y ver si sus valores más frecuentes están en los límites recomendados. Después se a analizado la correlación y covarianza de las variables más importantes nutricionalmente. Y por último se han visto mediante gráficos bivariantes las relaciones lineales entre diferentes variables cuantitativas.
+
+Sin embargo, hay unas preguntas que todavía no han sido respondidas. Esas preguntas corresponden con las planteadas en la introducción y objetivos del estudio. 
+
+Primero de todo, se ha observado que muchos de los datos que contenía la tabla de datos utilizada, contenía valores nulos. Por este motivo, alguna compañía y gráfico pueden no reflejar datos reales. Siendo KFC la compañía con mayores datos nulos, por ello la más afectada. Por este motivo no se puede contestar correctamente las preguntas planteadas, pero se puede contestar dando una aproximación.
+
+A pesar de todo, se ha podido llegar a la conclusión que la compañía más perjudicial para la salud ha resultado ser Burguer King. Esto es debido a que, sin ninguna duda, Burguer King ha resultado ser la compañía que más calorías y grasas totales tiene en sus productos. Los demás valores nutricionales han acabado siendo bastante parecidos con las demás compañías, por lo que no se puede decir exactamente cuál es la compañía que tiene los valores mayores. Por último, se ha comprobado que existen relaciones lineales entre los diferentes valores nutriconales como por ejemplo la grasa y el colesterol.  
 
