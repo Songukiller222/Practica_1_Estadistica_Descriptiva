@@ -209,9 +209,20 @@ print(tabla_frecuencias_Calories)
 
 
 
-Como se observa, el intervalo más frecuente es (100,200]. Sin embargo hay 98 elementos que tienen valores nulos, esto afectará a posteriores gráficos.
+Como se observa, el intervalo más frecuente es (100,200] kcal. Sin embargo hay 98 elementos que tienen valores nulos, esto afectará a posteriores gráficos.
 
 
+##### Histograma de Calorías
+
+```{r}
+
+FastFoodNutritionMenuV2 |> ggplot(aes(Calories)) +
+  geom_histogram(fill = "cyan", bins = 15, col = "white") + labs(title = "Histograma de las calorías",
+       x = "Intervalos de las calorías", y = "Frecuencia") +
+  theme_bw()
+```
+
+La mayoría de productos tienen alrededor de 225 kcal, lo que concuerda con lo obtenido anteriormente.
 
 
 #### Grasas
@@ -243,6 +254,17 @@ print(tabla_frecuencias_Fat)
 La mayoría de los productos tienen de 0 a 10 gramos de grasas. Hay gran cantidad de datos nulos, de hecho hay un 37% de datos nulos.
 
 
+##### Histograma de Grasas
+
+```{r}
+
+FastFoodNutritionMenuV2 |> ggplot(aes(Total.Fat..g.)) +
+  geom_histogram(fill = "cyan", bins = 15, col = "white") + labs(title = "Histograma de las grasas",
+       x = "Intervalos de las grasas", y = "Frecuencia") +
+  theme_bw()
+```
+
+La mayoría de productos tienen alrededor de 13 gramos de grasas. Además se vuelve a mostrar gran cantidad de valores nulos. 
 
 
 #### Grasas Saturadas
@@ -275,6 +297,17 @@ print(tabla_frecuencias_Saturated)
 De 2 a 4 gramos de grasas saturadas, es lo más frecuente. Teniendo en cuenta que el intervalo de grasas más repetido es (0,10], tiene sentido que las grasas saturadas tengan un intervalo menor. Si realizamos la suma de todos los intervalos que entrarían en el de las grasas, da como resultado un 50.96% de los productos totales analizados.
 
 
+##### Histograma de Grasas saturadas
+
+```{r}
+
+FastFoodNutritionMenuV2 |> ggplot(aes(Saturated.Fat..g.)) +
+  geom_histogram(fill = "cyan", bins = 15, col = "white") + labs(title = "Histograma de las grasas saturadas",
+       x = "Intervalos de las grasas saturadas", y = "Frecuencia") +
+  theme_bw()
+```
+
+La mayoría de productos tienen alrededor de 4 gramos de grasas saturadas, a medida que se aumenta los gramos, disminuye la cantidad de productos que se encuentran. 
 
 
 #### Colesterol
@@ -304,6 +337,17 @@ print(tabla_frecuencias_Cholesterol)
 El colesterol es un valor que hay que tener muy en cuenta para llevar una buena vida saludable. El intervalo más frecuente es de 0 a 50 mg. Es un valor no muy alto porque los expertos recomiendan menos de 300 mg/día, pero es preocupante que existan productos que superen ese límite.
 
 
+##### Histograma de Colesterol
+
+```{r}
+
+FastFoodNutritionMenuV2 |> ggplot(aes(Cholesterol..mg.)) +
+  geom_histogram(fill = "cyan", bins = 15, col = "white") + labs(title = "Histograma de las Colesterol",
+       x = "Intervalos de las Colesterol", y = "Frecuencia") +
+  theme_bw()
+```
+
+La mayoría de productos tienen alrededor de 50 mg de colesterol. Hay algún valor que se acerca a 600 mg, lo que supone una cantidad excesiva de colesterol en un solo producto.
 
 
 #### Sodio
@@ -332,7 +376,17 @@ print(tabla_frecuencias_Sodium)
 
 De 0 a 200 mg es el intervalo más frecuente en el sodio. Los expertos recomiendan por día para un adulto 2000 mg y para niños 1500mg. De este modo el sodio está dentro del límite recomendado y es muy raro que un producto de los analizados supere ese límite.
 
+##### Histograma de Sodio
 
+```{r}
+
+FastFoodNutritionMenuV2 |> ggplot(aes(Sodium...mg.)) +
+  geom_histogram(fill = "cyan", bins = 15, col = "white") + labs(title = "Histograma de las Sodio",
+       x = "Intervalos de las Sodio", y = "Frecuencia") +
+  theme_bw()
+```
+
+La mayoría de productos tienen alrededor de 300 mg de sodio, y la cantidad de productos disminuye cuando se aumenta los mg de sodio.
 
 
 #### Carbohidratos
@@ -366,6 +420,17 @@ print(tabla_frecuencias_Carbs)
 El intervalo más frecuente de carbohidratos es de (20,40] g. Lo recomendable es 135 gramos para una persona y 175 gramos para embarazadas. Los carbohidratos están dentro de los límites en la mayoría de compañías.
 
 
+##### Histograma de Carbohidratos
+
+```{r}
+
+FastFoodNutritionMenuV2 |> ggplot(aes(Carbs..g.)) +
+  geom_histogram(fill = "cyan", bins = 15, col = "white") + labs(title = "Histograma de las carbohidratos",
+       x = "Intervalos de las carbohidratos", y = "Frecuencia") +
+  theme_bw()
+```
+
+La mayoría de productos tienen alrededor de 40 gramos de carbohidratos, lo que está dentro de lo recomendado al día.
 
 
 #### Fibra
@@ -399,6 +464,17 @@ print(tabla_frecuencias_Fiber)
 De 0 a 2 gramos es lo más frecuente en la fibra y lo recomendable son de 20 a 35 gramos. Si comprobamos todos los productos que estén dentro de ese intervalo, el 100% de los productos lo cumplen. Así que respecto a la fibra, todas las compañías respetan los límites establecidos.
 
 
+##### Histograma de Fibra
+
+```{r}
+
+FastFoodNutritionMenuV2 |> ggplot(aes(Fiber..g.)) +
+  geom_histogram(fill = "cyan", bins = 15, col = "white") + labs(title = "Histograma de las fibra",
+       x = "Intervalos de las fibra", y = "Frecuencia") +
+  theme_bw()
+```
+
+Si no se tiene en cuenta los valores nulos, lo más común son 3 gramos de fibra.
 
 
 #### Azúcar
@@ -429,7 +505,17 @@ print(tabla_frecuencias_Sugars)
 
 El azúcar es un valor a tener en cuenta. Es el principal responsable del sobrepeso y ha de tomarse en cantidades adecuadas. Lo que se recomienda es de 50 a 60 gramos en adultos y 30 a 35 en niños. El intervalo más frecuente es de 0 a 20 gramos, lo que entra dentro de los límites. Si miramos los productos que podría tomar un adulto, estos nos salen un 68.64% de ellos. Sin embargo, los niños solo podrían tomar menos del 57.06% de estos.
 
+##### Histograma de Azúcar
 
+```{r}
+
+FastFoodNutritionMenuV2 |> ggplot(aes(Sugars..g.)) +
+  geom_histogram(fill = "cyan", bins = 15, col = "white") + labs(title = "Histograma de las azúcar",
+       x = "Intervalos de las azúcar", y = "Frecuencia") +
+  theme_bw()
+```
+
+Unos 30 gramos de azúcar es lo que más se repite en el histograma, lo que supondría aproximadamente un 60% del azúcar total recomendable al día.
 
 
 #### Proteína
@@ -460,6 +546,18 @@ print(tabla_frecuencias_Protein)
 
 
 El intervalo más frecuente es de 5 a 10 gramos de proteína. Lo recomendable es 0.8 gramos por cada kilo de peso. Suponiendo que un hombre promedio pesa 77.5 kilos y una mujer promedio 63.5 kilos, serían 62 gramos y 50.8 gramos respectivamente. De este modo las proteínas respetan el límite predefinido.
+
+##### Histograma de Proteína
+
+```{r}
+
+FastFoodNutritionMenuV2 |> ggplot(aes(Protein..g.)) +
+  geom_histogram(fill = "cyan", bins = 15, col = "white") + labs(title = "Histograma de las proteína",
+       x = "Intervalos de las proteína", y = "Frecuencia") +
+  theme_bw()
+```
+
+La mayoría de productos tienen alrededor de 15 gramos de proteína, lo que está dentro de los límites recomendados.
 
 
 ### Resumen Numérico
