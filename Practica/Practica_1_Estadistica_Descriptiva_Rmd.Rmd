@@ -11,40 +11,6 @@ knitr::opts_chunk$set(echo = TRUE,
                       warning=FALSE)
 ```
 
-```{r}
-FastFoodNutritionMenuV2 <- read.csv('FastFoodNutritionMenuV2.csv')
-FastFoodNutritionMenuV2$Calories <- as.numeric(FastFoodNutritionMenuV2$Calories)
-FastFoodNutritionMenuV2$Total.Fat..g. <- as.numeric(FastFoodNutritionMenuV2$Total.Fat..g.)
-FastFoodNutritionMenuV2$Cholesterol..mg. <- as.numeric(FastFoodNutritionMenuV2$Cholesterol..mg.)
-FastFoodNutritionMenuV2$Sodium...mg. <- as.numeric(FastFoodNutritionMenuV2$Sodium...mg.)
-FastFoodNutritionMenuV2$Carbs..g. <- as.numeric(FastFoodNutritionMenuV2$Carbs..g.)
-FastFoodNutritionMenuV2$Fiber..g. <- as.numeric(FastFoodNutritionMenuV2$Fiber..g.)
-FastFoodNutritionMenuV2$Sugars..g. <- as.numeric(FastFoodNutritionMenuV2$Sugars..g.)
-FastFoodNutritionMenuV2$Protein..g. <- as.numeric(FastFoodNutritionMenuV2$Protein..g.)
-FastFoodNutritionMenuV2$Saturated.Fat..g. <- as.numeric(FastFoodNutritionMenuV2$Saturated.Fat..g.)
-
-```
-
-
-Se lee el fichero y se convierte a datos numéricos las filas con las que se va a realizar los análisis. Esta conversión se debe a que el fichero se lee como cadena de caracteres y lo corregimos a datos numéricos.
-
-
-# Introducción y definición de objetivos
-
-
-El documento FastFoodNutritionMenuV2.csv contiene los resultados de distintos valores nutricionales obtenidos en diferentes productos de varias compañías de comida rápida.
-
-
-El objetivo de este estudio es determinar a partir de los valores nutricionales recogidos, la compañía con los productos más perjudiciales para la salud. Para ello se estudiarán varias categorías de relevancia alimenticia, como por ejemplo las grasas, la proteína, el azúcar, el colesterol... Con estos datos, se podrá confirmar cuál de las compañías es la más perjudicial para la salud. Además se tratarán de responder a las siguientes preguntas:
-
-¿Cuál es la compañía más perjudicial?
-
-¿Qué compañía es la que más grasa, proteína, calorías, azúcar tiene?
-
-¿Existe alguna relación entre alguno de los valores nutricionales como la grasa y la proteína?
-
-
-
 
 # Importación de datos y carga de paquetes
 
@@ -65,6 +31,38 @@ library(dplyr)
 ```
 
   
+```{r}
+FastFoodNutritionMenuV2 <- read.csv('FastFoodNutritionMenuV2.csv')
+FastFoodNutritionMenuV2$Calories <- as.numeric(FastFoodNutritionMenuV2$Calories)
+FastFoodNutritionMenuV2$Total.Fat..g. <- as.numeric(FastFoodNutritionMenuV2$Total.Fat..g.)
+FastFoodNutritionMenuV2$Cholesterol..mg. <- as.numeric(FastFoodNutritionMenuV2$Cholesterol..mg.)
+FastFoodNutritionMenuV2$Sodium...mg. <- as.numeric(FastFoodNutritionMenuV2$Sodium...mg.)
+FastFoodNutritionMenuV2$Carbs..g. <- as.numeric(FastFoodNutritionMenuV2$Carbs..g.)
+FastFoodNutritionMenuV2$Fiber..g. <- as.numeric(FastFoodNutritionMenuV2$Fiber..g.)
+FastFoodNutritionMenuV2$Sugars..g. <- as.numeric(FastFoodNutritionMenuV2$Sugars..g.)
+FastFoodNutritionMenuV2$Protein..g. <- as.numeric(FastFoodNutritionMenuV2$Protein..g.)
+FastFoodNutritionMenuV2$Saturated.Fat..g. <- as.numeric(FastFoodNutritionMenuV2$Saturated.Fat..g.)
+
+```
+
+Se lee el fichero y se convierte a datos numéricos las filas con las que se va a realizar los análisis. Esta conversión se debe a que el fichero se lee como cadena de caracteres y lo corregimos a datos numéricos.
+
+
+# Introducción y definición de objetivos
+
+
+El documento FastFoodNutritionMenuV2.csv contiene los resultados de distintos valores nutricionales obtenidos en diferentes productos de varias compañías de comida rápida.
+
+
+El objetivo de este estudio es determinar a partir de los valores nutricionales recogidos, la compañía con los productos más perjudiciales para la salud. Para ello se estudiarán varias categorías de relevancia alimenticia, como por ejemplo las grasas, la proteína, el azúcar, el colesterol... Con estos datos, se podrá confirmar cuál de las compañías es la más perjudicial para la salud. Además se tratarán de responder a las siguientes preguntas:
+
+¿Cuál es la compañía más perjudicial?
+
+¿Qué compañía es la que más grasa, proteína, calorías, azúcar tiene?
+
+¿Existe alguna relación entre alguno de los valores nutricionales como la grasa y la proteína?
+
+
 # Diccionario de datos
 
 
@@ -77,27 +75,27 @@ Variables que no se tendrán en cuenta: Calories.from.Fat, Trans.Fat, Weight.Wat
 Variables que sí se tendrán en cuenta en el estudio (nombradas por su nombre en el fichero, descripción, unidades si las tiene y tipo de dato):
 
 
-*`Company`: Nombre de la compañía distribuidora del producto (cualitativo, nominal)
+* `Company`: Nombre de la compañía distribuidora del producto (cualitativo, nominal)
 
-*`Item`: Nombre del producto, se relaciona con company (cualitativo, nominal)
+* `Item`: Nombre del producto, se relaciona con company (cualitativo, nominal)
 
-*`Calories`: Calorías totales del producto (kcal) (cuantitativo, continuo)
+* `Calories`: Calorías totales del producto (kcal) (cuantitativo, continuo)
 
-*`Total.Fat..g.`: Grasas totales del producto (g) (cuantitativo, continuo)
+* `Total.Fat..g.`: Grasas totales del producto (g) (cuantitativo, continuo)
 
-*`Saturated.Fat..g.`: Grasas saturadas totales del producto (g) (cuantitativo, continuo)
+* `Saturated.Fat..g.`: Grasas saturadas totales del producto (g) (cuantitativo, continuo)
 
-*`Cholesterol..mg.`: Colesterol total del producto (mg) (cuantitativo, continuo)
+* `Cholesterol..mg.`: Colesterol total del producto (mg) (cuantitativo, continuo)
 
-*`Sodium...mg.`: Sodio total del producto (mg) (cuantitativo, continuo)
+* `Sodium...mg.`: Sodio total del producto (mg) (cuantitativo, continuo)
 
-*`Carbs..g.`: Carbohidratos totales del producto (g) (cuantitativo, continuo)
+* `Carbs..g.`: Carbohidratos totales del producto (g) (cuantitativo, continuo)
 
-*`Fiber..g.`: Fibra total del producto (g) (cuantitativo, continuo)
+* `Fiber..g.`: Fibra total del producto (g) (cuantitativo, continuo)
 
-*`Sugars..g.`: Azúcares totales del producto (g) (cuantitativo, continuo)
+* `Sugars..g.`: Azúcares totales del producto (g) (cuantitativo, continuo)
 
-*`Protein..g.`: Proteina total del producto (g) (cuantitativo, continuo)
+* `Protein..g.`: Proteina total del producto (g) (cuantitativo, continuo)
 
 
 # Muestra del dataset
@@ -114,7 +112,6 @@ gt()
 ```
 
 
-
 # Análisis exploratorio de datos
 
 
@@ -126,10 +123,7 @@ Se procederá a realizar el análisis exploratorio de datos (EDA) para obtener u
 Se va a empezar analizando los datos univariantes que nos permitirá comprender la distribución y frecuencia de cada variable. Tras ello, se podrá entender mejor como está repartida cada variable.
 
 
-### Tablas de frecuencias
-
-
-#### Company
+### Company
 
 
 Se comenzará con la variable "Company", para observar cómo se distribuyen las compañías de la muestra de datos.
@@ -143,7 +137,7 @@ tabla_frecuencia_Company <-FastFoodNutritionMenuV2 |>
   mutate(f = n/nrow(FastFoodNutritionMenuV2),
          N = cumsum(n),
          F = cumsum(f))
-knitr::kable(tabla_frecuencia_Company, digits = 4)
+knitr::kable(tabla_frecuencia_Company, digits = 4) |> labs(title = "Tabla de frequencia de compañías")
 ```
 
 La tabla de frecuencia anterior muestra el número total de productos recogidos de cada compañía. En esta se observa McDonald's es la compañía de la que se ha recogido más datos (28.66 %) y Pizza Hut la que menos (6.45 %).
@@ -181,7 +175,7 @@ Una vez comprendida la distribución de las compañías, se realizan las tablas 
 
 
 
-#### Calorías
+### Calorías
 
 
 
@@ -204,7 +198,7 @@ tabla_frecuencias_Calories <- tabla_frecuencias_Calories |>
   arrange(Intervalo_de_calorias) |>
   kable(digits = 4)
 
-print(tabla_frecuencias_Calories)
+knitr::kable(tabla_frecuencias_Calories, digits = 4)
 ```
 
 
@@ -212,7 +206,7 @@ print(tabla_frecuencias_Calories)
 Como se observa, el intervalo más frecuente es (100,200] kcal. Sin embargo hay 98 elementos que tienen valores nulos, esto afectará a posteriores gráficos.
 
 
-##### Histograma de Calorías
+#### Histograma de Calorías
 
 ```{r}
 
@@ -225,7 +219,7 @@ FastFoodNutritionMenuV2 |> ggplot(aes(Calories)) +
 La mayoría de productos tienen alrededor de 225 kcal, lo que concuerda con lo obtenido anteriormente.
 
 
-#### Grasas
+### Grasas
 
 
 
@@ -246,7 +240,7 @@ tabla_frecuencias_Fat <- tabla_frecuencias_Fat |>
   arrange(Intervalo_de_grasas) |>
   kable(digits = 4)
 
-print(tabla_frecuencias_Fat)
+knitr::kable(tabla_frecuencias_Fat, digits = 4)
 
 ```
 
@@ -254,7 +248,7 @@ print(tabla_frecuencias_Fat)
 La mayoría de los productos tienen de 0 a 10 gramos de grasas. Hay gran cantidad de datos nulos, de hecho hay un 37% de datos nulos.
 
 
-##### Histograma de Grasas
+#### Histograma de Grasas
 
 ```{r}
 
@@ -267,7 +261,7 @@ FastFoodNutritionMenuV2 |> ggplot(aes(Total.Fat..g.)) +
 La mayoría de productos tienen alrededor de 13 gramos de grasas. Además se vuelve a mostrar gran cantidad de valores nulos. 
 
 
-#### Grasas Saturadas
+### Grasas Saturadas
 
 
 
@@ -289,7 +283,7 @@ tabla_frecuencias_Saturated <- tabla_frecuencias_Saturated |>
   arrange(Intervalo_de_saturadas) |>
   kable(digits = 4)
 
-print(tabla_frecuencias_Saturated)
+knitr::kable(tabla_frecuencias_Saturated, digits = 4)
 
 ```
 
@@ -297,7 +291,7 @@ print(tabla_frecuencias_Saturated)
 De 2 a 4 gramos de grasas saturadas, es lo más frecuente. Teniendo en cuenta que el intervalo de grasas más repetido es (0,10], tiene sentido que las grasas saturadas tengan un intervalo menor. Si realizamos la suma de todos los intervalos que entrarían en el de las grasas, da como resultado un 50.96% de los productos totales analizados.
 
 
-##### Histograma de Grasas saturadas
+#### Histograma de Grasas saturadas
 
 ```{r}
 
@@ -310,7 +304,7 @@ FastFoodNutritionMenuV2 |> ggplot(aes(Saturated.Fat..g.)) +
 La mayoría de productos tienen alrededor de 4 gramos de grasas saturadas, a medida que se aumenta los gramos, disminuye la cantidad de productos que se encuentran. 
 
 
-#### Colesterol
+### Colesterol
 
 
 
@@ -331,13 +325,13 @@ tabla_frecuencias_Cholesterol <- tabla_frecuencias_Cholesterol |>
   arrange(Intervalo_de_colesterol) |>
   kable(digits = 4)
 
-print(tabla_frecuencias_Cholesterol)
+knitr::kable(tabla_frecuencias_Cholesterol, digits = 4)
 ```
 
 El colesterol es un valor que hay que tener muy en cuenta para llevar una buena vida saludable. El intervalo más frecuente es de 0 a 50 mg. Es un valor no muy alto porque los expertos recomiendan menos de 300 mg/día, pero es preocupante que existan productos que superen ese límite.
 
 
-##### Histograma de Colesterol
+#### Histograma de Colesterol
 
 ```{r}
 
@@ -350,7 +344,7 @@ FastFoodNutritionMenuV2 |> ggplot(aes(Cholesterol..mg.)) +
 La mayoría de productos tienen alrededor de 50 mg de colesterol. Hay algún valor que se acerca a 600 mg, lo que supone una cantidad excesiva de colesterol en un solo producto.
 
 
-#### Sodio
+### Sodio
 
 
 
@@ -371,12 +365,12 @@ tabla_frecuencias_Sodium <- tabla_frecuencias_Sodium |>
   arrange(Intervalo_de_sodio) |>
   kable(digits = 4)
 
-print(tabla_frecuencias_Sodium)
+knitr::kable(tabla_frecuencias_Sodium, digits = 4)
 ```
 
 De 0 a 200 mg es el intervalo más frecuente en el sodio. Los expertos recomiendan por día para un adulto 2000 mg y para niños 1500mg. De este modo el sodio está dentro del límite recomendado y es muy raro que un producto de los analizados supere ese límite.
 
-##### Histograma de Sodio
+#### Histograma de Sodio
 
 ```{r}
 
@@ -389,7 +383,7 @@ FastFoodNutritionMenuV2 |> ggplot(aes(Sodium...mg.)) +
 La mayoría de productos tienen alrededor de 300 mg de sodio, y la cantidad de productos disminuye cuando se aumenta los mg de sodio.
 
 
-#### Carbohidratos
+### Carbohidratos
 
 
 
@@ -411,7 +405,7 @@ tabla_frecuencias_Carbs <- tabla_frecuencias_Carbs |>
   arrange(Intervalo_de_carbohidratos) |>
   kable(digits = 4)
 
-print(tabla_frecuencias_Carbs)
+knitr::kable(tabla_frecuencias_Carbs, digits = 4)
 
 
 ```
@@ -456,7 +450,7 @@ tabla_frecuencias_Fiber <- tabla_frecuencias_Fiber |>
   arrange(Intervalo_de_fibra) |>
   kable(digits = 4)
 
-print(tabla_frecuencias_Fiber)
+knitr::kable(tabla_frecuencias_Fiber, digits = 4)
 
 ```
 
@@ -498,7 +492,7 @@ tabla_frecuencias_Sugars <- tabla_frecuencias_Sugars |>
   arrange(Intervalo_de_azucar) |>
   kable(digits = 4)
 
-print(tabla_frecuencias_Sugars)
+knitr::kable(tabla_frecuencias_Sugars, digits = 4)
 
 ```
 
@@ -540,7 +534,7 @@ tabla_frecuencias_Protein <- tabla_frecuencias_Protein |>
   arrange(Intervalo_de_proteinas) |>
   kable(digits = 4)
 
-print(tabla_frecuencias_Protein)
+knitr::kable(tabla_frecuencias_Protein, digits = 4)
 
 ```
 
@@ -592,7 +586,7 @@ Debido a que los valores de la covarianza no están normalizados, se procederá 
 
 
 ```{r}
-FastFoodNutritionMenuV2 |> select(Calories, Protein..g., Total.Fat..g., Cholesterol..mg.) |> drop_na() |> cor() |> round(2) |> corrplot(method = "ellipse", type = "lower",addCoef.col = "cyan", diag = FALSE)
+FastFoodNutritionMenuV2 |> select(Calories, Protein..g., Total.Fat..g., Cholesterol..mg.) |> drop_na() |> cor() |> round(2) |> corrplot(method = "ellipse", type = "lower",addCoef.col = "cyan", diag = FALSE) 
 ```
 
 Como se puede observar, la correlación entre todos los valores tienen una relación lineal positiva. Siendo Colesterol-Calorías las variables que tienen menos relación lineal y GrasaTotal-Calorías las variables con más relación lineal.
@@ -625,7 +619,7 @@ Se va a realizar un gráfico de cajas de las calorías en función de las compa�
 
 ```{r}
 FastFoodNutritionMenuV2 |> 
-  ggplot(aes(x=Company, y=Calories))+geom_boxplot()+theme_bw()+labs(y = "Calorías (kcal)",x = "Compañia")
+  ggplot(aes(x=Company, y=Calories))+geom_boxplot()+theme_bw()+labs(title= "Tabla de cajas (Compañía-Calorías)", y = "Calorías (kcal)",x = "Compañia")
 
 ```
 
@@ -654,7 +648,7 @@ Se proseguirá realizando un gráfico de cajas de las proteínas en función de 
 
 ```{r}
 FastFoodNutritionMenuV2 |> 
-  ggplot(aes(x=Company, y=Protein..g.))+geom_boxplot()+theme_bw()+labs(y = "Proteína (g)",x = "Compañia")
+  ggplot(aes(x=Company, y=Protein..g.))+geom_boxplot()+theme_bw()+labs(title="Tabla de cajas (Compañía-Proteína)", y = "Proteína (g)",x = "Compañia")
 
 ```
 
@@ -670,7 +664,7 @@ Además, la compañía Pizza Hut tiene muy concentrado los valores, estando todo
 Ahora se estudiará el gráfico de densidades de las grasas de los productos.
 
 ```{r}
-FastFoodNutritionMenuV2 |> 
+FastFoodNutritionMenuV2 |>
   ggplot(aes(x = Total.Fat..g., fill = Company)) + geom_density(alpha = 0.5)+labs(title = "Gráfico de densidad de los gramos de grasas", 
        x = "Grasas (g)",
        y = "Densidad")+theme_bw()
@@ -681,8 +675,8 @@ La mayoría de los productos se concentran en menos de 25 gramos de grasa y de l
 En este gráfico también se puede ver que los valores de KFC se encuentran en su mayoría en 0, lo que se verá reflejado en el gráfico siguiente, el gráfico de cajas de la variable Total.Fat..g., es decir, de las grasas de cada producto en función de su compañía.
 
 ```{r}
-FastFoodNutritionMenuV2 |> 
-  ggplot(aes(x=Company, y=Total.Fat..g.))+geom_boxplot()+theme_bw()+labs(y = "Grasas (g)",x = "Compañia")
+FastFoodNutritionMenuV2 |>
+  ggplot(aes(x=Company, y=Total.Fat..g.))+geom_boxplot()+theme_bw()+labs(title="Tabla de cajas (Compañía-Grasas)",y = "Grasas (g)",x = "Compañia")
 ```
 
 Burger King es la compañía con la mayor amplitud en el numero de grasas de sus productos, y, como ya se prevenía con el gráfico anterior, muchos de los datos de KFC se pierden al tener tantos valores nulos, teniendo su mediana en 0.
@@ -692,6 +686,7 @@ Burger King es la compañía con la mayor amplitud en el numero de grasas de sus
 
 ```{r}
 FastFoodNutritionMenuV2 |> 
+  
   ggplot(aes(x = Cholesterol..mg., fill = Company)) + geom_density(alpha = 0.5)+labs(title = "Gráfico de densidad de los gramos de grasas", 
        x = "Colesterol (mg)",
        y = "Densidad")+theme_bw()
@@ -705,7 +700,7 @@ A continuación se muestra el gráfico de cajas de colesterol:
 
 ```{r}
 FastFoodNutritionMenuV2 |> 
-  ggplot(aes(x=Company, y=Cholesterol..mg.))+geom_boxplot()+theme_bw()+labs(y = "Colesterol (mg)",x = "Compañia")
+  ggplot(aes(x=Company, y=Cholesterol..mg.))+geom_boxplot()+theme_bw()+labs(title="Tabla de cajas (Compañía-Colesterol)", y = "Colesterol (mg)",x = "Compañia")
 ```
 
 Con ello, se confirma que en esta variable se encuentran muchos casos atípicos para todas las compañías a excepción de Pizza Hut, que no tiene ninguno, unos valores que llegan a ser 500 veces mayores que la mediana de su compañía.
@@ -722,6 +717,7 @@ Se comenzará haciendo un estudio de las relaciones entre las variables de prote
 
 ```{r}
 FastFoodNutritionMenuV2 |> 
+  drop_na()|>
   ggplot(aes(x = Calories, y = Protein..g.)) +
   geom_point() +
   geom_smooth() +
@@ -732,6 +728,7 @@ FastFoodNutritionMenuV2 |>
 
 ```{r}
 FastFoodNutritionMenuV2 |> 
+  drop_na()|>
   ggplot(aes(x = Calories, y = Protein..g.)) +
   geom_point() +
   geom_smooth(method = lm, se = FALSE) +
@@ -747,6 +744,7 @@ Con esto vemos cómo estas dos variables están muy relacionadas, pues se han ob
 
 ```{r}
 FastFoodNutritionMenuV2 |> 
+  drop_na()|>
   ggplot(aes(x = Calories, y = Protein..g., col = Company)) +
   geom_point() +
   labs(title = "Gráfico de dispersión clasificado por compañías",
@@ -768,6 +766,7 @@ Por último, se procede a analizar la relación entre las variables grasas (g) y
 
 ```{r}
 FastFoodNutritionMenuV2 |> 
+  drop_na()|>
   ggplot(aes(x = Total.Fat..g., y = Cholesterol..mg.)) +
   geom_point() +
   geom_smooth() +
@@ -782,6 +781,7 @@ En este gráfico se puede observar como al principio se tiene una dispersión li
 
 ```{r}
 FastFoodNutritionMenuV2 |> 
+  drop_na()|>
   ggplot(aes(x = Total.Fat..g., y = Cholesterol..mg.)) +
   geom_point() +
   geom_smooth(method = lm, se = FALSE) +
@@ -795,6 +795,7 @@ Se puede observar en esta gráfica una regresión lineal positiva constante, don
 
 ```{r}
 FastFoodNutritionMenuV2 |> 
+  drop_na()|>
   ggplot(aes(x = Total.Fat..g., y = Cholesterol..mg. , col= Company)) +
   geom_point() +
    labs(title = "Gráfico de dispersión calificado por compañías", 
